@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>magicui</groupId>
+  <artifactId>magicui</artifactId>
+  <version>0.0.1</version>
+  <description>Magic UI is Java framework for graphical user interface development.</description>
+</project>
