@@ -19,13 +19,31 @@
  */
 package org.magicui;
 
+import java.io.IOException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
 /**
- * Yeh is a <b>cool</b> class.
+ * This class bla bla bla.
  * 
  * @author Filipe Tavares
- * @author Belmiro Sotto-mayor
+ * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class Yeh {
-
+public class XMLParser {
+    public XMLParser() throws SAXException, IOException,
+            ParserConfigurationException {
+        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        final DocumentBuilder builder = factory.newDocumentBuilder();
+        final InputSource is = new InputSource("sadf");
+        final Document doc = builder.parse(is);
+        
+        doc.getChildNodes().
+    }
 }
