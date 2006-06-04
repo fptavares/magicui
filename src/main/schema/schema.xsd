@@ -1,39 +1,87 @@
 <xs:schema
           xmlns:xs="http://www.w3.org/2001/XMLSchema"
-          xmlns:po="http://magicui.org/xml"
+          xmlns:ui="http://magicui.org/xml"
           targetNamespace="http://magicui.org/xml"
           elementFormDefault="qualified">
-    <xs:element name="purchase-order">
+    <xs:element name="template">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="customer" type="po:customer"/>
-                <xs:element name="date" type="xs:dateTime"/>
-                <xs:element name="line-item" type="po:line-item" minOccurs="0" maxOccurs="unbounded"/>
-                <xs:element name="shipper" type="po:shipper" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="window" type="ui:container" minOccurs="0" />
+                <xs:element name="form" type="ui:container" minOccurs="0" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="customer">
+    
+    <xs:complexType name="container">
         <xs:sequence>
-            <xs:element name="name" type="xs:string"/>
-            <xs:element name="address" type="xs:string"/>
+            <xs:element name="frame" type="ui:container" minOccurs="0"  maxOccurs="unbounded" />
+            <xs:element name="import" type="ui:import" minOccurs="0"  maxOccurs="unbounded" />
+            <xs:element name="label" type="ui:basic-component" minOccurs="0"  maxOccurs="unbounded" />
+            <xs:element name="input" type="ui:form-component" minOccurs="0"  maxOccurs="unbounded" />
+            <xs:element name="list" type="ui:collection-component" minOccurs="0"  maxOccurs="unbounded" />
+            <xs:element name="combobox" type="ui:collection-component" minOccurs="0"  maxOccurs="unbounded" />
+            <xs:element name="radio" type="ui:collection-component" minOccurs="0"  maxOccurs="unbounded" />
+            <xs:element name="checkbox" type="ui:form-component" minOccurs="0"  maxOccurs="unbounded" />
+            <xs:element name="password" type="ui:form-component" minOccurs="0"  maxOccurs="unbounded" />
+            <xs:element name="image" type="ui:basic-component" minOccurs="0"  maxOccurs="unbounded" />
+            <xs:element name="button" type="ui:basic-component" minOccurs="0"  maxOccurs="unbounded" />
         </xs:sequence>
-        <xs:attribute name="age" type="xs:int"/>
-        <xs:attribute name="moo" type="xs:int" default="100"/>
-        <xs:attribute name="poo" type="xs:int" fixed="200"/>
+        <xs:attribute name="title" type="xs:string"/>
     </xs:complexType>
-    <xs:complexType name="line-item">
+    
+    <xs:complexType name="import">
         <xs:sequence>
-            <xs:element name="description" type="xs:string"/>
-            <xs:element name="per-unit-ounces" type="xs:decimal"/>
-            <xs:element name="price" type="xs:decimal"/>
-            <xs:element name="quantity" type="xs:integer"/>
         </xs:sequence>
+        <xs:attribute name="id" type="xs:string"/>
+        <xs:attribute name="value" type="xs:string"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="property" type="xs:string"/>
     </xs:complexType>
-    <xs:complexType name="shipper">
+    
+    <xs:complexType name="basic-component">
         <xs:sequence>
-            <xs:element name="name" type="xs:string"/>
-            <xs:element name="per-ounce-rate" type="xs:decimal"/>
+            <xs:element name="event" type="ui:event" minOccurs="0"  maxOccurs="unbounded" />
         </xs:sequence>
+        <xs:attribute name="value" type="xs:string"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="property" type="xs:string"/>
+        <xs:attribute name="class" type="xs:string"/>
+    </xs:complexType>
+    
+    <xs:complexType name="form-component">
+        <xs:sequence>
+            <xs:element name="event" type="ui:event" minOccurs="0"  maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string"/>
+        <xs:attribute name="value" type="xs:string"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="property" type="xs:string"/>
+        <xs:attribute name="class" type="xs:string"/>
+    </xs:complexType>
+    
+    <xs:complexType name="collection-component">
+        <xs:sequence>
+            <xs:element name="event" type="ui:event" minOccurs="0"  maxOccurs="unbounded" />
+            <xs:element name="item" type="ui:item" minOccurs="0"  maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string"/>
+        <xs:attribute name="value" type="xs:string"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="property" type="xs:string"/>
+        <xs:attribute name="class" type="xs:string"/>
+    </xs:complexType>
+    
+    <xs:complexType name="event">
+        <xs:attribute name="id" type="xs:string"/>
+        <xs:attribute name="value" type="xs:string"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="property" type="xs:string"/>
+    </xs:complexType>
+    
+    <xs:complexType name="item">
+        <xs:attribute name="id" type="xs:string"/>
+        <xs:attribute name="value" type="xs:string"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="property" type="xs:string"/>
     </xs:complexType>
 </xs:schema>

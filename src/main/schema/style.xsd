@@ -1,0 +1,22 @@
+<xs:schema
+          xmlns:xs="http://www.w3.org/2001/XMLSchema"
+          xmlns:ui="http://magicui.org/xml"
+          targetNamespace="http://magicui.org/xml"
+          elementFormDefault="qualified">
+    <xs:element name="style">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="definition" type="ui:definition" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="x" type="xs:int" />
+                            <xs:element name="y" type="xs:int" />
+                            <xs:element name="height" type="xs:int" />
+                            <xs:element name="width" type="xs:int" />
+                            <xs:element name="padding" type="xs:int" />
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
