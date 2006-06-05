@@ -17,15 +17,52 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui.events;
+package org.magicui.ui.web;
 
 /**
- * EventAdapter is a <b>cool</b> class.
+ * WebTag is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class EventAdapter implements EventListener {
+public class WebTag {
+	private final String prefix;
+	private final String sufix;
+	
+	private String value = "";
+	
+	/**
+	 * @param prefix
+	 * @param sufix
+	 */
+	public WebTag(final String prefix, final String sufix) {
+		this.prefix = prefix;
+		this.sufix = sufix;
+	}
+	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return prefix + value + sufix;
+	}
 
+	/**
+	 * The getter method for the value property.
+	 * @return the value
+	 */
+	public String getValue() {
+		return this.value;
+	}
+
+	/**
+	 * The setter method for the value property.
+	 * @param value the value to set
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
+	
 }

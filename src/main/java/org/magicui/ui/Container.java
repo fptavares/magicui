@@ -1,6 +1,6 @@
 /*
  * Magic UI
- * Copyright (C) 2006  Filipe Tavares, Belmiro Sotto-mayor
+ * Copyright (C) 2006  Filipe Tavares, Belmiro Sotto-Mayor
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,5 +27,14 @@ package org.magicui.ui;
  * @version $Revision$ ($Author$)
  */
 public interface Container extends Component {
+
+	/**
+	 * @param component
+	 * @param xCounter
+	 * @param yCounter
+	 * @param xWeight
+	 * @param yWeight
+	 */
+	void add(Component component, int xCounter, int yCounter, int xWeight, int yWeight);
 
 }

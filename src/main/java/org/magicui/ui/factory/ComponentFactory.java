@@ -1,6 +1,6 @@
 /*
  * Magic UI
- * Copyright (C) 2006  Filipe Tavares, Belmiro Sotto-mayor
+ * Copyright (C) 2006  Filipe Tavares, Belmiro Sotto-Mayor
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,6 +19,8 @@
  */
 package org.magicui.ui.factory;
 
+import org.magicui.ui.Component;
+
 /**
  * ComponentFactory is a <b>cool</b> class.
  * 
@@ -30,4 +32,8 @@ public interface ComponentFactory<T> {
     public Object createWindow();
     public T createFrame();
     public T createLabel();
+	/**
+	 * @param nodeName
+	 */
+	public Component create(String nodeName);
 }

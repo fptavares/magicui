@@ -34,12 +34,11 @@
     <xs:complexType name="import">
         <xs:sequence>
         </xs:sequence>
-        <xs:attribute name="id" type="xs:string"/>
-        <xs:attribute name="value" type="xs:string"/>
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="property" type="xs:string"/>
+        <xs:attribute name="template" type="xs:string"/>
         <xs:attribute name="x" type="xs:string"/>
         <xs:attribute name="y" type="xs:string"/>
+        <xs:attribute name="x-weight" type="xs:int"/>
+        <xs:attribute name="y-weight" type="xs:int"/>
     </xs:complexType>
     
     <xs:complexType name="basic-component">
@@ -49,11 +48,10 @@
         <xs:attribute name="value" type="xs:string"/>
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="property" type="xs:string"/>
-        <xs:attribute name="class" type="xs:string"/>
         <xs:attribute name="x" type="xs:string"/>
         <xs:attribute name="y" type="xs:string"/>
-        <xs:attribute name="height" type="xs:int"/>
-        <xs:attribute name="width" type="xs:int"/>
+        <xs:attribute name="x-weight" type="xs:int"/>
+        <xs:attribute name="y-weight" type="xs:int"/>
     </xs:complexType>
     
     <xs:complexType name="form-component">
@@ -64,11 +62,10 @@
         <xs:attribute name="value" type="xs:string"/>
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="property" type="xs:string"/>
-        <xs:attribute name="class" type="xs:string"/>
         <xs:attribute name="x" type="xs:string"/>
         <xs:attribute name="y" type="xs:string"/>
-        <xs:attribute name="height" type="xs:int"/>
-        <xs:attribute name="width" type="xs:int"/>
+        <xs:attribute name="x-weight" type="xs:int"/>
+        <xs:attribute name="y-weight" type="xs:int"/>
     </xs:complexType>
     
     <xs:complexType name="collection-component">
@@ -80,11 +77,10 @@
         <xs:attribute name="value" type="xs:string"/>
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="property" type="xs:string"/>
-        <xs:attribute name="class" type="xs:string"/>
         <xs:attribute name="x" type="xs:string"/>
         <xs:attribute name="y" type="xs:string"/>
-        <xs:attribute name="height" type="xs:int"/>
-        <xs:attribute name="width" type="xs:int"/>
+        <xs:attribute name="x-weight" type="xs:int"/>
+        <xs:attribute name="y-weight" type="xs:int"/>
     </xs:complexType>
     
     <xs:complexType name="event">

@@ -17,15 +17,41 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui.events;
+package org.magicui.ui.web;
+
+import org.magicui.ui.factory.AbstractComponentFactory;
 
 /**
- * EventAdapter is a <b>cool</b> class.
+ * WebFactory is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class EventAdapter implements EventListener {
+public class WebFactory extends AbstractComponentFactory {
+
+	/**
+	 * @see org.magicui.ui.factory.ComponentFactory#createFrame()
+	 */
+	public Object createFrame() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @see org.magicui.ui.factory.ComponentFactory#createLabel()
+	 */
+	public Object createLabel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @see org.magicui.ui.factory.ComponentFactory#createWindow()
+	 */
+	public Object createWindow() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

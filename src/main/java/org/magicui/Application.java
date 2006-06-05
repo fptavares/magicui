@@ -17,15 +17,37 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui.events;
+package org.magicui;
+
+import org.magicui.ui.View;
 
 /**
- * EventAdapter is a <b>cool</b> class.
+ * Application is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class EventAdapter implements EventListener {
+public class Application {
+	/**
+	 * The mainView <code>View</code> field.
+	 */
+	private View mainView;
 
+	/**
+	 * The getter method for the mainView property.
+	 * @return the mainView
+	 */
+	public final View getMainView() {
+		return this.mainView;
+	}
+
+	/**
+	 * The setter method for the mainView property.
+	 * @param mainView the mainView to set
+	 */
+	public final void setMainView(View mainView) {
+		this.mainView = mainView;
+	}
+	
 }

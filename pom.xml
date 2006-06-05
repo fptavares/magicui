@@ -4,4 +4,11 @@
   <artifactId>magicui</artifactId>
   <version>0.0.1</version>
   <description>Magic UI is Java framework for graphical user interface development.</description>
+  <dependencies>
+    <dependency>
+      <groupId>commons-configuration</groupId>
+      <artifactId>commons-configuration</artifactId>
+      <version>1.2</version>
+    </dependency>
+  </dependencies>
 </project>

@@ -17,15 +17,38 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui.events;
+package org.magicui.ui.web;
+
+import org.magicui.ui.AbstractComponent;
 
 /**
- * EventAdapter is a <b>cool</b> class.
+ * WebLabel is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class EventAdapter implements EventListener {
+public final class WebLabel extends AbstractComponent<WebTag,String> {
+
+	/**
+	 * @see org.magicui.ui.Component#createComponent()
+	 */
+	public WebTag createComponent() {
+		return new WebTag("", "");
+	}
+
+	/**
+	 * @see org.magicui.ui.Component#getValue()
+	 */
+	public String getValue() {
+		return this.component.getValue();
+	}
+
+	/**
+	 * @see org.magicui.ui.Component#setValue(java.lang.Object)
+	 */
+	public void setValue(String value) {
+		this.component.setValue(value);
+	}
 
 }
