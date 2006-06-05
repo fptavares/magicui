@@ -17,17 +17,38 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui;
+package org.magicui.ui.swing;
+
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import org.magicui.ui.factory.AbstractComponentFactory;
+
 
 /**
- * ComponentFactory is a <b>cool</b> class.
+ * SwingFactory is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public interface ComponentFactory<T> {
-    public Object createWindow();
-    public T createFrame();
-    public T createLabel();
+public class SwingFactory extends AbstractComponentFactory<JComponent> {
+
+    public JComponent createFrame() {
+        return new JPanel();
+    }
+
+    public JComponent createLabel() {
+        return new JLabel();
+    }
+
+    public Object createWindow() {
+        return new JFrame();
+    }
+
 }

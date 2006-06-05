@@ -17,34 +17,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package ui.swing;
-
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import ui.AbstractComponentFactory;
+package org.magicui.ui;
 
 /**
- * SwingFactory is a <b>cool</b> class.
+ * Component is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class SwingFactory extends AbstractComponentFactory<JComponent> {
-
-    public JComponent createFrame() {
-        return new JPanel();
-    }
-
-    public JComponent createLabel() {
-        return new JLabel();
-    }
-
-    public Object createWindow() {
-        return new JFrame();
-    }
-
+public interface Component<C,T> {
+	public C createComponent();
+	public void setValue(T object);
+	public T getValue();
+	public C render();
 }

@@ -17,17 +17,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package ui;
-
-import org.magicui.ComponentFactory;
+package org.magicui.ui.events;
 
 /**
- * AbstractComponentFactory is a <b>cool</b> class.
+ * EventAdapter is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public abstract class AbstractComponentFactory<T> implements ComponentFactory<T> {
+public class EventAdapter implements EventListener {
 
 }
