@@ -2,8 +2,10 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>magicui</groupId>
   <artifactId>magicui</artifactId>
+  <name>Magic UI</name>
   <version>0.0.1</version>
   <description>Magic UI is Java framework for graphical user interface development.</description>
+  <url>http://seldom.wordpress.com/projects/magicui</url>
   <dependencies>
     <dependency>
       <groupId>commons-configuration</groupId>
@@ -11,4 +13,11 @@
       <version>1.2</version>
     </dependency>
   </dependencies>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>

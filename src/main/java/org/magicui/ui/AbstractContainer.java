@@ -20,49 +20,26 @@
 package org.magicui.ui;
 
 /**
- * Component is a <b>cool</b> class.
+ * AbstractContainer is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  * @param <C> The type of the component
  */
-public interface Component<C> {
-	/**
-	 * The EVENT_CLICK <code>String</code> field.
-	 */
-	public static final String EVENT_CLICK = "click";
-	/**
-	 * The EVENT_HOVER <code>Object</code> field.
-	 */
-	public static final Object EVENT_HOVER = "hover";
-	
-	/**
-	 * Create the component.
-	 * @return The component
-	 */
-	public C createComponent();
-	
-	/**
-	 * @return The rendered component
-	 */
-	public C getComponent();
+public abstract class AbstractContainer<C> extends AbstractComponent<C> implements View<C> {
 
 	/**
-	 * The getter method for the id property.
-	 * @return the id
+	 * @see org.magicui.ui.View#add(org.magicui.ui.Component, int, int, int, int)
 	 */
-	public String getId();
+	public final void add(Component component, int x, int y, int xWeight, int yWeight) {
+		component.setParent(this);
+		addComponent(component, x, y, xWeight, yWeight);
+	}
 
 	/**
-	 * The setter method for the id property.
-	 * @param id the id to set
+	 * 
 	 */
-	public void setId(String id);
+	protected abstract void addComponent(Component component, int x, int y, int xWeight, int yWeight);
 
-	/**
-	 * The setter method for the parent property.
-	 * @param parent the parent to set
-	 */
-	public void setParent(View parent);
 }

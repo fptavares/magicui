@@ -19,14 +19,14 @@
  */
 package org.magicui.ui.swing;
 
-import java.util.Observable;
-import java.util.Observer;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
+import org.magicui.ui.Component;
+import org.magicui.ui.View;
 import org.magicui.ui.factory.AbstractComponentFactory;
 
 
@@ -39,16 +39,31 @@ import org.magicui.ui.factory.AbstractComponentFactory;
  */
 public class SwingFactory extends AbstractComponentFactory<JComponent> {
 
-    public JComponent createFrame() {
-        return new JPanel();
+    /**
+     * @see org.magicui.ui.factory.ComponentFactory#createFrame()
+     */
+    public Component<? extends JComponent> createFrame() {
+        return new SwingContainer();
     }
 
-    public JComponent createLabel() {
-        return new JLabel();
+    /**
+     * @see org.magicui.ui.factory.ComponentFactory#createLabel()
+     */
+    public Component<? extends JComponent> createLabel() {
+        return new SwingLabel();
     }
 
-    public Object createWindow() {
-        return new JFrame();
+    /**
+     * @see org.magicui.ui.factory.ComponentFactory#createWindow()
+     */
+    public Object createWindow(String title, View<JComponent> content) {
+    	final JFrame frame = new JFrame(title);
+    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(content.getComponent());
+        frame.pack();
+        frame.setLocationRelativeTo(null); //TODO
+        frame.setVisible(true);
+        return frame;
     }
 
 }

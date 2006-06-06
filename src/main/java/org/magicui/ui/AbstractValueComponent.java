@@ -20,49 +20,15 @@
 package org.magicui.ui;
 
 /**
- * Component is a <b>cool</b> class.
+ * AbstractValueComponent is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  * @param <C> The type of the component
+ * @param <T> The type of the content
  */
-public interface Component<C> {
-	/**
-	 * The EVENT_CLICK <code>String</code> field.
-	 */
-	public static final String EVENT_CLICK = "click";
-	/**
-	 * The EVENT_HOVER <code>Object</code> field.
-	 */
-	public static final Object EVENT_HOVER = "hover";
-	
-	/**
-	 * Create the component.
-	 * @return The component
-	 */
-	public C createComponent();
-	
-	/**
-	 * @return The rendered component
-	 */
-	public C getComponent();
+public abstract class AbstractValueComponent<C, T> extends AbstractComponent<C>
+		implements ValueComponent<C, T> {
 
-	/**
-	 * The getter method for the id property.
-	 * @return the id
-	 */
-	public String getId();
-
-	/**
-	 * The setter method for the id property.
-	 * @param id the id to set
-	 */
-	public void setId(String id);
-
-	/**
-	 * The setter method for the parent property.
-	 * @param parent the parent to set
-	 */
-	public void setParent(View parent);
 }

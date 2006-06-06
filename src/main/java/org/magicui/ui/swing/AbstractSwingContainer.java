@@ -17,24 +17,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui;
+package org.magicui.ui.swing;
+
+import org.magicui.ui.AbstractContainer;
 
 /**
- * Container is a <b>cool</b> class.
+ * AbstractSwingContainer is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public interface Container extends Component {
+public abstract class AbstractSwingContainer<C> extends AbstractContainer<C> {
 
 	/**
-	 * @param component
-	 * @param xCounter
-	 * @param yCounter
-	 * @param xWeight
-	 * @param yWeight
+	 * @see org.magicui.ui.Component#addListener(java.lang.String, java.lang.String)
 	 */
-	void add(Component component, int xCounter, int yCounter, int xWeight, int yWeight);
+	public void addListener(String type, String action) {
+		// TODO Auto-generated method stub
+
+	}
 
 }

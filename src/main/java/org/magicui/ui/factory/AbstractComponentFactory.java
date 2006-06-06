@@ -19,6 +19,10 @@
  */
 package org.magicui.ui.factory;
 
+import static org.magicui.Globals.*;
+
+import org.magicui.ui.Component;
+
 
 
 /**
@@ -29,5 +33,15 @@ package org.magicui.ui.factory;
  * @version $Revision$ ($Author$)
  */
 public abstract class AbstractComponentFactory<T> implements ComponentFactory<T> {
-
+	/**
+	 * @see org.magicui.ui.factory.ComponentFactory#create(java.lang.String)
+	 */
+	public Component<? extends T> create(String type) {
+		if (type.equals(ELEMENT_LABEL)) {
+			return createLabel();
+		} else if (type.equals(ELEMENT_VIEW)) {
+			return createFrame();
+		}
+		throw new RuntimeException("nao encontrou!" + type);
+	}
 }

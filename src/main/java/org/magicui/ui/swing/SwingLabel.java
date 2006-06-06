@@ -21,8 +21,6 @@ package org.magicui.ui.swing;
 
 import javax.swing.JLabel;
 
-import org.magicui.ui.AbstractComponent;
-
 /**
  * SwingLabel is a <b>cool</b> class.
  * 
@@ -30,7 +28,7 @@ import org.magicui.ui.AbstractComponent;
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public final class SwingLabel extends AbstractComponent<JLabel,String> {
+public final class SwingLabel extends AbstractSwingComponent<JLabel,String> {
 
 	/**
 	 * @see org.magicui.ui.Component#createComponent()

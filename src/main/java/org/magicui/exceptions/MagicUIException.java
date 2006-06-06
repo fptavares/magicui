@@ -17,52 +17,37 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui;
+package org.magicui.exceptions;
 
 /**
- * Component is a <b>cool</b> class.
+ * MagicUIException is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
- * @param <C> The type of the component
  */
-public interface Component<C> {
-	/**
-	 * The EVENT_CLICK <code>String</code> field.
-	 */
-	public static final String EVENT_CLICK = "click";
-	/**
-	 * The EVENT_HOVER <code>Object</code> field.
-	 */
-	public static final Object EVENT_HOVER = "hover";
-	
-	/**
-	 * Create the component.
-	 * @return The component
-	 */
-	public C createComponent();
-	
-	/**
-	 * @return The rendered component
-	 */
-	public C getComponent();
+public class MagicUIException extends Exception {
 
 	/**
-	 * The getter method for the id property.
-	 * @return the id
+	 * @param message
+	 * @param cause
 	 */
-	public String getId();
+	public MagicUIException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
 	/**
-	 * The setter method for the id property.
-	 * @param id the id to set
+	 * @param message
 	 */
-	public void setId(String id);
+	public MagicUIException(String message) {
+		super(message);
+	}
 
 	/**
-	 * The setter method for the parent property.
-	 * @param parent the parent to set
+	 * @param cause
 	 */
-	public void setParent(View parent);
+	public MagicUIException(Throwable cause) {
+		super(cause);
+	}
+
 }

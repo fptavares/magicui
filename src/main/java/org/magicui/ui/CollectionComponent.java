@@ -17,15 +17,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui.events;
+package org.magicui.ui;
 
 /**
- * EventAdapter is a <b>cool</b> class.
+ * CollectionComponent is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class EventAdapter implements EventListener {
-
+public interface CollectionComponent {
+	/**
+	 * @param key
+	 * @param value
+	 */
+	public void addItem(String key, String value);
 }

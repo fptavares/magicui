@@ -26,9 +26,21 @@ package org.magicui.ui;
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  * @param <C> The type of the component
- * @param <T> The type of the content
  */
-public abstract class AbstractComponent<C,T> implements Component<C,T> {
+public abstract class AbstractComponent<C> implements Component<C> {
+
+	/**
+	 * The parent <code>View</code> field.
+	 */
+	protected View parent;
+	
+	/**
+	 * 
+	 */
+	public AbstractComponent() {
+		this.component = createComponent();
+	}
+	
 	/**
 	 * The component <code>C</code> field.
 	 */
@@ -38,44 +50,6 @@ public abstract class AbstractComponent<C,T> implements Component<C,T> {
 	 * The id <code>String</code> field.
 	 */
 	private String id = "";
-	/**
-	 * The x <code>String</code> field.
-	 */
-	private int x = 0;
-	/**
-	 * The y <code>int</code> field.
-	 */
-	private int y = 0;
-	/**
-	 * The height <code>String</code> field.
-	 */
-	private String height = "";
-	/**
-	 * The width <code>String</code> field.
-	 */
-	private String width = "";
-	
-	/**
-	 * @see org.magicui.ui.Component#render()
-	 */
-	public C render() {
-		this.component = createComponent();
-		return this.component;
-	}
-
-	/**
-	 * @see org.magicui.ui.Component#getHeight()
-	 */
-	public final String getHeight() {
-		return this.height;
-	}
-
-	/**
-	 * @see org.magicui.ui.Component#setHeight(java.lang.String)
-	 */
-	public final void setHeight(String height) {
-		this.height = height;
-	}
 
 	/**
 	 * @see org.magicui.ui.Component#getId()
@@ -90,47 +64,20 @@ public abstract class AbstractComponent<C,T> implements Component<C,T> {
 	public final void setId(String id) {
 		this.id = id;
 	}
-
+	
 	/**
-	 * @see org.magicui.ui.Component#getWidth()
+	 * @see org.magicui.ui.Component#getComponent()
 	 */
-	public final String getWidth() {
-		return this.width;
+	public C getComponent() {
+		return this.component;
 	}
-
+	
 	/**
-	 * @see org.magicui.ui.Component#setWidth(java.lang.String)
+	 * The setter method for the parent property.
+	 * @param parent the parent to set
 	 */
-	public final void setWidth(String width) {
-		this.width = width;
-	}
-
-	/**
-	 * @see org.magicui.ui.Component#getX()
-	 */
-	public final int getX() {
-		return this.x;
-	}
-
-	/**
-	 * @see org.magicui.ui.Component#setX(int)
-	 */
-	public final void setX(int x) {
-		this.x = x;
-	}
-
-	/**
-	 * @see org.magicui.ui.Component#getY()
-	 */
-	public final int getY() {
-		return this.y;
-	}
-
-	/**
-	 * @see org.magicui.ui.Component#setY(int)
-	 */
-	public final void setY(int y) {
-		this.y = y;
+	public void setParent(View parent) {
+		this.parent = parent;
 	}
 	
 	

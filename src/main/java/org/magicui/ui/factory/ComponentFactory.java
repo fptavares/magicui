@@ -19,7 +19,10 @@
  */
 package org.magicui.ui.factory;
 
+import javax.swing.JComponent;
+
 import org.magicui.ui.Component;
+import org.magicui.ui.View;
 
 /**
  * ComponentFactory is a <b>cool</b> class.
@@ -29,11 +32,11 @@ import org.magicui.ui.Component;
  * @version $Revision$ ($Author$)
  */
 public interface ComponentFactory<T> {
-    public Object createWindow();
-    public T createFrame();
-    public T createLabel();
+    public Object createWindow(String title, View<T> content);
+    public Component<? extends T> createFrame();
+    public Component<? extends T> createLabel();
 	/**
 	 * @param nodeName
 	 */
-	public Component create(String nodeName);
+	public Component<? extends T> create(String nodeName);
 }

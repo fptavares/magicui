@@ -19,7 +19,18 @@
  */
 package org.magicui;
 
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.ResourceBundle;
+
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+
+import org.magicui.exceptions.MagicUIException;
 import org.magicui.ui.View;
+import org.magicui.ui.factory.ComponentFactory;
+import org.magicui.ui.swing.SwingFactory;
+import org.magicui.xml.XMLParser;
 
 /**
  * Application is a <b>cool</b> class.
@@ -28,11 +39,38 @@ import org.magicui.ui.View;
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class Application {
+public class Application<T> {
+	/**
+	 * The config <code>AppConfig</code> field.
+	 */
+	private final AppConfig config;
+	/**
+	 * The resources <code>ResourceBundle</code> field.
+	 */
+	private final ResourceBundle resources;
 	/**
 	 * The mainView <code>View</code> field.
 	 */
-	private View mainView;
+	private View<T> mainView;
+	
+	/**
+	 * The factory <code>ComponentFactory<T></code> field.
+	 */
+	private ComponentFactory<T> factory;
+	
+	/**
+	 * The actions <code>Map<String,Action></code> field.
+	 */
+	private final Map<String, Action> actions = new Hashtable<String, Action>();
+	
+	/**
+	 * @throws MagicUIException 
+	 * 
+	 */
+	public Application() throws MagicUIException {
+		this.config = new AppConfig();
+		this.resources = ResourceBundle.getBundle(this.config.getMessageResources());
+	}
 
 	/**
 	 * The getter method for the mainView property.
@@ -46,8 +84,65 @@ public class Application {
 	 * The setter method for the mainView property.
 	 * @param mainView the mainView to set
 	 */
-	public final void setMainView(View mainView) {
+	public final void setMainView(View<T> mainView) {
 		this.mainView = mainView;
+	}
+	
+	/**
+	 * @param actionId
+	 * @param action
+	 */
+	public void registerAction(String actionId, Action action) {
+		this.actions.put(actionId, action);
+	}
+	
+	/**
+	 * The getter method for the factory property.
+	 * @return the factory
+	 */
+	public ComponentFactory<T> getFactory() {
+		return this.factory;
+	}
+	
+	/**
+	 * @param key
+	 * @return
+	 */
+	public String getMessage(String key) {
+		return this.resources.getString(key);
+	}
+	
+	/**
+	 * @param id
+	 * @return The action
+	 */
+	public Action getAction(String id) {
+		return actions.get(id);
+	}
+	
+	/**
+	 * Start the application.
+	 * @param vars The main template vars
+	 * @throws MagicUIException 
+	 */
+	public void start(Object... vars) throws MagicUIException {
+		this.mainView = XMLParser.load(this, this.config.getMainWidget(), vars);
+		this.factory.createWindow(this.config.getName(), this.mainView);
+	}
+	
+	/**
+	 * @param args
+	 * @throws MagicUIException 
+	 */
+	public static void main(String[] args) throws MagicUIException {
+		final Application<JComponent> app = new Application<JComponent>();
+		app.factory = new SwingFactory();
+		app.registerAction("act1", new Action() {
+			public void act(View container) {
+				JOptionPane.showMessageDialog(null, String.valueOf(container));
+			}
+		});
+		app.start();
 	}
 	
 }

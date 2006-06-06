@@ -17,15 +17,50 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui.events;
+package org.magicui.ui;
+
+import org.magicui.Action;
 
 /**
- * EventListener is a <b>cool</b> class.
+ * ActionItem is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public interface EventListener {
-	public void clicked(final Container container);
+public final class ActionItem {
+	private final String place;
+	private final String text;
+	private final Action action;
+	/**
+	 * @param text
+	 * @param action
+	 * @param place 
+	 */
+	public ActionItem(final String text, final Action action, final String place) {
+		this.text = text;
+		this.action = action;
+		this.place = place;
+	}
+	/**
+	 * The getter method for the action property.
+	 * @return the action
+	 */
+	public final Action getAction() {
+		return this.action;
+	}
+	/**
+	 * The getter method for the text property.
+	 * @return the text
+	 */
+	public final String getText() {
+		return this.text;
+	}
+	/**
+	 * The getter method for the place property.
+	 * @return the place
+	 */
+	public String getPlace() {
+		return this.place;
+	}
 }

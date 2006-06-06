@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://magicui.org/xml"
+	xmlns:xsi="http://magicui.org/xml/application"
+	xsi:schemaLocation="src/main/schema/app.xsd">
+	
+	<name>My Test App</name>
+	<description><![CDATA[
+	After Raphael had discoursed with great judgment on the many errors that were both among
+	 us and these nations; had treated of the wise institutions both here and there, and had
+	 spoken as distinctly of the customs and government of every nation through which he had 
+	 passed, as if he had spent his whole life in it, Peter, being struck with admiration, 
+	 said: "I wonder, Raphael, how it comes that you enter into no king's service, for I am 
+	 sure there are none to whom you would not be very acceptable: for your learning and knowledge 
+	 both of men and things, are such that you would not only entertain them very pleasantly, 
+	 but be of great use to them, by the examples you could set before them and the advices you 
+	 could give them; and by this means you would both serve your own interest and be of great 
+	 use to all your friends."
+	 ]]></description>
+	 
+	 <url></url>
+	 <icon></icon>
+	 <logo></logo>
+	 
+	 <author>
+	 	<name>Filipe Tavares</name>
+	 	<email>ftavares@magicui.org</email>
+	 	<position>developer</position>
+	 </author>
+	 <author>
+	 	<name>Belmiro Sotto-Mayor</name>
+	 	<email>bsottomayor@magicui.org</email>
+	 	<position>developer</position>
+	 </author>
+	 
+	 <toolkit>swing</toolkit>
+	 <main-widget>main</main-widget>
+	 <message-resources>org.magicbeans.resources</message-resources>
+</application>

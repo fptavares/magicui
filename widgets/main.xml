@@ -1,0 +1,9 @@
+<widget>
+	<action id="act1" key="action.test" menu="tools" toolbar="main" />
+
+    <view id="dsf">
+        <label id="cena2" key="main.label.cena2">
+        	<event type="click" action="act1" />
+        </label>
+    </view>
+</widget>

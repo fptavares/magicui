@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="magicui">
+  <bannerRight>
+    <name>Magic UI</name>
+    <src>http://seldom.wordpress.com/files/2006/05/magicui_200.png</src>
+    <href>http://seldom.wordpress.com/projects/magicui</href>
+  </bannerRight>
+  <body>
+    <links>
+      <item name="Magic UI @ AS" href="http://doc-it.fe.up.pt/aaguiar/space/Teaching/2005-06/LEIC-ASS-2005-06/Projectos+LEIC/MagicUI" />
+      <item name="Magic UI @ Wordpress" href="http://seldom.wordpress.com/projects/magicui"/>
+    </links>
+
+    <menu name="Magic UI">
+      <item name="Introduction" href="index.html"/>
+      <item name="Download" href="download.html"/>
+      <item name="Release Notes" href="release-notes.html" />
+      <item name="General Information" href="about.html"/>
+      <item name="Road Map" href="roadmap.html" />
+    </menu>
+
+    ${reports}
+
+  </body>
+</project>

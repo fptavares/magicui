@@ -6,15 +6,14 @@
     <xs:element name="template">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="window" type="ui:container" minOccurs="0" />
-                <xs:element name="form" type="ui:container" minOccurs="0" />
+                <xs:element name="view" type="ui:container" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     
     <xs:complexType name="container">
         <xs:sequence>
-            <xs:element name="frame" type="ui:container" minOccurs="0"  maxOccurs="unbounded" />
+            <xs:element name="view" type="ui:container" minOccurs="0"  maxOccurs="unbounded" />
             <xs:element name="import" type="ui:import" minOccurs="0"  maxOccurs="unbounded" />
             <xs:element name="label" type="ui:basic-component" minOccurs="0"  maxOccurs="unbounded" />
             <xs:element name="input" type="ui:form-component" minOccurs="0"  maxOccurs="unbounded" />

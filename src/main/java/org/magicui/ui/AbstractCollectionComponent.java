@@ -20,34 +20,56 @@
 package org.magicui.ui;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
- * View is a <b>cool</b> class.
+ * AbstractCollectionComponent is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
- * @param <C> The type of the component
  */
-public interface View<C> extends Component<C> {
+public abstract class AbstractCollectionComponent extends AbstractComponent
+		implements CollectionComponent {
+	final Collection<Item> items = new LinkedList<Item>();
 
 	/**
-	 * @param component
-	 * @param xCounter
-	 * @param yCounter
-	 * @param xWeight
-	 * @param yWeight
+	 * @see org.magicui.ui.CollectionComponent#addItem(java.lang.String, java.lang.String)
 	 */
-	void add(Component component, int xCounter, int yCounter, int xWeight, int yWeight);
+	public void addItem(String key, String value) {
+		this.items.add(new Item(key, value));
+	}
+	
+	private class Item {
+		private final String key;
+		private final String value;
+		
+		/**
+		 * @param key
+		 * @param value
+		 */
+		public Item(final String key, final String value) {
+			super();
+			this.key = key;
+			this.value = value;
+		}
 
-	/**
-	 * @param menu
-	 */
-	void addMenus(Collection<ActionItem> menu);
+		/**
+		 * The getter method for the key property.
+		 * @return the key
+		 */
+		public final String getKey() {
+			return this.key;
+		}
 
-	/**
-	 * @param toolbar
-	 */
-	void addToolbars(Collection<ActionItem> toolbar);
+		/**
+		 * The getter method for the value property.
+		 * @return the value
+		 */
+		public final String getValue() {
+			return this.value;
+		}
+		
+	}
 
 }

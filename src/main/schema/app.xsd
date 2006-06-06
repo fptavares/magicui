@@ -3,12 +3,12 @@
           xmlns:ui="http://magicui.org/xml"
           targetNamespace="http://magicui.org/xml"
           elementFormDefault="qualified">
-    <xs:element name="app">
+    <xs:element name="application">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="name" type="xs:string" />
                 <xs:element name="description" type="xs:string" />
-                <xs:element name="toolkit" type="xs:string" />
+                <xs:element name="url" type="xs:string" />
                 <xs:element name="icon" type="xs:string" />
                 <xs:element name="logo" type="xs:string" />
                 <xs:element name="author" maxOccurs="unbounded" >
@@ -19,6 +19,8 @@
                             <xs:element name="position" type="xs:string" />
                         </xs:sequence>
                     </xs:complexType>
+                </xs:element>
+                <xs:element name="toolkit" type="xs:string" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
