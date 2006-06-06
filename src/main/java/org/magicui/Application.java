@@ -21,6 +21,7 @@ package org.magicui;
 
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javax.swing.JComponent;
@@ -109,7 +110,11 @@ public class Application<T> {
 	 * @return
 	 */
 	public String getMessage(String key) {
-		return this.resources.getString(key);
+		try {
+			return this.resources.getString(key);
+		} catch(MissingResourceException e) {
+			return key;
+		}
 	}
 	
 	/**

@@ -19,25 +19,14 @@
  */
 package org.magicui.ui.swing;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.util.Collection;
 
-import javax.swing.AbstractAction;
-import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-import javax.swing.JToolBar;
 
-import org.magicui.Globals;
-import org.magicui.ui.ActionItem;
 import org.magicui.ui.Component;
 
 /**
@@ -79,9 +68,6 @@ public class SwingContainer extends AbstractSwingContainer<JPanel> {
      */
     private final GridBagConstraints gridBagConstraints =
         new GridBagConstraints();
-    
-    private int xCounter = 0;
-    private int yCounter = 0;
 
 	/**
 	 * @see org.magicui.ui.Component#createComponent()
@@ -104,51 +90,11 @@ public class SwingContainer extends AbstractSwingContainer<JPanel> {
         this.gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         this.gridBagConstraints.gridwidth = xWeight;
         this.gridBagConstraints.gridheight = yWeight;
-        this.gridBagConstraints.gridx = x+1; // to make room for toolbars
-        this.gridBagConstraints.gridy = y+1; // to make room for toolbars
+        this.gridBagConstraints.gridx = x;
+        this.gridBagConstraints.gridy = y;
         this.gridBagConstraints.insets = defaultInsets;
         this.gridBagConstraints.weightx = 1.0;
         ((Container) this.component).add(component, this.gridBagConstraints);
 	}
-
-	/**
-	 * @see org.magicui.ui.View#addMenus(java.util.Collection)
-	 */
-	public void addMenus(Collection<ActionItem> menu) {
-		JMenuBar bar = new JMenuBar();
-	}
-
-	/**
-	 * @see org.magicui.ui.View#addToolbars(java.util.Collection)
-	 */
-	public void addToolbars(Collection<ActionItem> toolbar) {
-		JToolBar top = null;
-		JToolBar bottom = null;
-		JToolBar left = null;
-		JToolBar right = null;
-		for (final ActionItem item : toolbar) {
-			if (item.getPlace().equals(Globals.TOOLBAR_TOP)) {
-				if (top == null) {
-					top = new JToolBar();
-					addComponent(top, 0, 0, GridBagConstraints.REMAINDER, 0);
-				}
-				top.add(new AbstractAction() {
-					public void actionPerformed(ActionEvent e) {
-						item.getAction().act(SwingContainer.this);
-					}
-				});
-			} else if (item.getPlace().equals(Globals.TOOLBAR_LEFT)) {
-				if (left == null) {
-					left = new JToolBar();
-					addComponent(left, 0, 0, 0, GridBagConstraints.REMAINDER);
-				}
-				top.add(new AbstractAction() {
-					public void actionPerformed(ActionEvent e) {
-						item.getAction().act(SwingContainer.this);
-					}
-				});
-			}
-		}
-	}
-
+	
 }

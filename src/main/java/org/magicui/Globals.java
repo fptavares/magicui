@@ -46,6 +46,7 @@ public class Globals {
 	public static final String ATTR_KEY = "key";
 	public static final String ATTR_MENU = "menu";
 	public static final String ATTR_TOOLBAR = "toolbar";
+	public static final String ATTR_ICON = "icon";
 	
 	public static final String TOOLBAR_TOP = "top";
 	public static final String TOOLBAR_BOTTOM = "bottom";

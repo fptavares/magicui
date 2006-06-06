@@ -41,13 +41,46 @@ public interface View<C> extends Component<C> {
 	void add(Component component, int xCounter, int yCounter, int xWeight, int yWeight);
 
 	/**
-	 * @param menu
+	 * @param top
+	 * @param bottom
+	 * @param left
+	 * @param right
 	 */
-	void addMenus(Collection<ActionItem> menu);
+	void setToolbars(Collection<ActionItem> top, Collection<ActionItem> bottom, Collection<ActionItem> left, Collection<ActionItem> right);
 
 	/**
-	 * @param toolbar
+	 * @param menu
 	 */
-	void addToolbars(Collection<ActionItem> toolbar);
+	void setMenus(Collection<ActionItem> menu);
+	
+	/**
+	 * The getter method for the bottom property.
+	 * @return the bottom
+	 */
+	public Collection<ActionItem> getBottom();
+
+	/**
+	 * The getter method for the left property.
+	 * @return the left
+	 */
+	public Collection<ActionItem> getLeft();
+
+	/**
+	 * The getter method for the menu property.
+	 * @return the menu
+	 */
+	public Collection<ActionItem> getMenu();
+
+	/**
+	 * The getter method for the right property.
+	 * @return the right
+	 */
+	public Collection<ActionItem> getRight();
+
+	/**
+	 * The getter method for the top property.
+	 * @return the top
+	 */
+	public Collection<ActionItem> getTop();
 
 }

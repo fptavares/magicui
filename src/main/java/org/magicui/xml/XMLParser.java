@@ -26,6 +26,7 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Map;
 
+import javax.swing.JToolBar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -33,6 +34,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.beanutils.BeanUtils;
 import org.magicui.Action;
 import org.magicui.Application;
+import org.magicui.Globals;
 import org.magicui.exceptions.MagicUIException;
 import org.magicui.ui.ActionItem;
 import org.magicui.ui.CollectionComponent;
@@ -99,7 +101,11 @@ public class XMLParser<T> {
 			final InputSource is = new InputSource("widgets/" + widget + ".xml");
 			final Document doc = builder.parse(is);
 		
-			Collection<ActionItem> toolbar = null;
+			Node rootComponent = null;
+			Collection<ActionItem> top = null;
+			Collection<ActionItem> bottom = null;
+			Collection<ActionItem> left = null;
+			Collection<ActionItem> right = null;
 			Collection<ActionItem> menu = null;
 			int varCounter = 0;
 			Node tempNode = null;
@@ -107,51 +113,73 @@ public class XMLParser<T> {
 			for (int i = 0; i < nodes.getLength()-1; i++) {
 				final Node node = nodes.item(i);
 				
-				// <var>
-				if (node.getNodeName().equals(ELEMENT_VAR)) {
-					this.varMap.put(node.getAttributes().getNamedItem(ATTR_NAME).getNodeValue(), vars[varCounter]);
-					varCounter++;
-					
-					// <action>
-				} else if (node.getNodeName().equals(ELEMENT_ACTION)) {
-					// key
-					tempNode = node.getAttributes().getNamedItem(ATTR_KEY);
-					final String text;
-					if (tempNode == null) { // use default key
-						text = messageFor(widget + ".action." + getAttribute(node, ATTR_ID));
-					} else {
-						text = messageFor(tempNode.getNodeValue());
-					}
-					// id
-					final Action action = this.app.getAction(getAttribute(node, ATTR_ID));
-					// toolbar
-					if (hasAttribute(node, ATTR_TOOLBAR)) {
-						if (toolbar == null) {
-							toolbar = new LinkedList<ActionItem>();
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+					// <var>
+					if (node.getNodeName().equals(ELEMENT_VAR)) {
+						this.varMap.put(node.getAttributes().getNamedItem(ATTR_NAME).getNodeValue(), vars[varCounter]);
+						varCounter++;
+						
+						// <action>
+					} else if (node.getNodeName().equals(ELEMENT_ACTION)) {
+						// key
+						tempNode = node.getAttributes().getNamedItem(ATTR_KEY);
+						final String text;
+						if (tempNode == null) { // use default key
+							text = messageFor(widget + ".action." + getAttribute(node, ATTR_ID));
+						} else {
+							text = messageFor(tempNode.getNodeValue());
 						}
-						toolbar.add(new ActionItem(text, action, getAttribute(node, ATTR_TOOLBAR)));
-					}
-					// menu
-					if (hasAttribute(node, ATTR_MENU)) {
-						if (menu == null) {
-							menu = new LinkedList<ActionItem>();
+						// id
+						final Action action = this.app.getAction(getAttribute(node, ATTR_ID));
+						// icon
+						String icon = null;
+						if (hasAttribute(node, ATTR_ICON)) {
+							icon = getAttribute(node, ATTR_ICON);
 						}
-						menu.add(new ActionItem(text, action, getAttribute(node, ATTR_MENU)));
+						// toolbar
+						if (hasAttribute(node, ATTR_TOOLBAR)) {
+							final String place = getAttribute(node, ATTR_TOOLBAR);
+							if (place.equals(Globals.TOOLBAR_TOP)) {
+								if (top == null) {
+									top = new LinkedList<ActionItem>();
+								}
+								top.add(new ActionItem(text, action, place, icon));
+							} else if (place.equals(Globals.TOOLBAR_LEFT)) {
+								if (left == null) {
+									left = new LinkedList<ActionItem>();
+								}
+								left.add(new ActionItem(text, action, place, icon));
+							} else if (place.equals(Globals.TOOLBAR_BOTTOM)) {
+								if (bottom == null) {
+									bottom = new LinkedList<ActionItem>();
+								}
+								bottom.add(new ActionItem(text, action, place, icon));
+							} else if (place.equals(Globals.TOOLBAR_RIGHT)) {
+								if (right == null) {
+									right = new LinkedList<ActionItem>();
+								}
+								right.add(new ActionItem(text, action, place, icon));
+							}
+						}
+						// menu
+						if (hasAttribute(node, ATTR_MENU)) {
+							if (menu == null) {
+								menu = new LinkedList<ActionItem>();
+							}
+							menu.add(new ActionItem(text, action, getAttribute(node, ATTR_MENU), icon));
+						}
+					} else if (node.getNodeName().equals(ELEMENT_VIEW)) {
+						rootComponent = node;
 					}
 				}
 			}
-			final Node root = nodes.item(-1);
 			
-			final View<T> view = (View<T>) factory.create(root.getNodeName());
+			final View<T> view = (View<T>) factory.create(rootComponent.getNodeName());
 			
-			parse(view, root.getChildNodes()); // parse child elements
+			parse(view, rootComponent.getChildNodes()); // parse child elements
 
-			if (toolbar != null) {
-				view.addToolbars(toolbar);
-			}
-			if (menu != null) {
-				view.addMenus(menu);
-			}
+			view.setToolbars(top, bottom, left, right);
+			view.setMenus(menu);
 
 			return view;
 

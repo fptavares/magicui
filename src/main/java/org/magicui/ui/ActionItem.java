@@ -32,15 +32,17 @@ public final class ActionItem {
 	private final String place;
 	private final String text;
 	private final Action action;
+	private final String icon;
 	/**
 	 * @param text
 	 * @param action
 	 * @param place 
 	 */
-	public ActionItem(final String text, final Action action, final String place) {
+	public ActionItem(final String text, final Action action, final String place, final String icon) {
 		this.text = text;
 		this.action = action;
 		this.place = place;
+		this.icon = icon;
 	}
 	/**
 	 * The getter method for the action property.
@@ -62,5 +64,12 @@ public final class ActionItem {
 	 */
 	public String getPlace() {
 		return this.place;
+	}
+	/**
+	 * The getter method for the icon property.
+	 * @return the icon
+	 */
+	public String getIcon() {
+		return this.icon;
 	}
 }

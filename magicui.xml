@@ -34,5 +34,5 @@
 	 
 	 <toolkit>swing</toolkit>
 	 <main-widget>main</main-widget>
-	 <message-resources>org.magicbeans.resources</message-resources>
+	 <message-resources>org.magicui.resources</message-resources>
 </application>

@@ -19,12 +19,19 @@
  */
 package org.magicui.ui.swing;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.util.Collection;
 
+import javax.swing.AbstractAction;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JToolBar;
 
+import org.magicui.ui.ActionItem;
 import org.magicui.ui.Component;
 import org.magicui.ui.View;
 import org.magicui.ui.factory.AbstractComponentFactory;
@@ -54,16 +61,51 @@ public class SwingFactory extends AbstractComponentFactory<JComponent> {
     }
 
     /**
-     * @see org.magicui.ui.factory.ComponentFactory#createWindow()
+     * @see org.magicui.ui.factory.ComponentFactory#createWindow(java.lang.String, org.magicui.ui.View)
      */
     public Object createWindow(String title, View<JComponent> content) {
     	final JFrame frame = new JFrame(title);
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(content.getComponent());
+    	if (content.getTop() != null) {
+    		frame.getContentPane().add(convert(content, content.getTop()), BorderLayout.NORTH);
+    	} 
+    	if (content.getBottom() != null) {
+    		frame.getContentPane().add(convert(content, content.getBottom()), BorderLayout.SOUTH);
+    	} 
+    	if (content.getLeft() != null) {
+    		frame.getContentPane().add(convert(content, content.getLeft()), BorderLayout.WEST);
+    	} 
+    	if (content.getRight() != null) {
+    		frame.getContentPane().add(convert(content, content.getRight()), BorderLayout.EAST);
+    	} 
+    	if (content.getMenu() != null) {
+    		final JMenuBar menuBar = new JMenuBar();
+    		
+    		frame.setJMenuBar(menuBar);
+    	}
+    	
+    	frame.getContentPane().add(content.getComponent(), BorderLayout.CENTER);
         frame.pack();
         frame.setLocationRelativeTo(null); //TODO
         frame.setVisible(true);
         return frame;
     }
+
+	/**
+	 * @param content 
+	 * @param top
+	 * @return 
+	 */
+	private java.awt.Component convert(final View<JComponent> content, Collection<ActionItem> items) {
+		final JToolBar bar = new JToolBar();
+		for (final ActionItem item : items) {
+			bar.add(new AbstractAction(item.getText(), new ImageIcon(item.getIcon())) {
+					public void actionPerformed(ActionEvent e) {
+						item.getAction().act(content);
+					}
+				});
+		}
+		return bar;
+	}
 
 }
