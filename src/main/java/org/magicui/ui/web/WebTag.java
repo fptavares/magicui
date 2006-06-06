@@ -27,18 +27,15 @@ package org.magicui.ui.web;
  * @version $Revision$ ($Author$)
  */
 public class WebTag {
-	private final String prefix;
-	private final String sufix;
+	private final String tag;
 	
-	private String value = "";
+	private String [] values;
 	
 	/**
-	 * @param prefix
-	 * @param sufix
+	 * @param tag
 	 */
-	public WebTag(final String prefix, final String sufix) {
-		this.prefix = prefix;
-		this.sufix = sufix;
+	public WebTag(final String tag) {
+		this.tag = tag;
 	}
 	
 	/**
@@ -46,23 +43,19 @@ public class WebTag {
 	 */
 	@Override
 	public String toString() {
-		return prefix + value + sufix;
+		String result = tag;
+		for (String value : values) {
+			result = result.replaceFirst("[^%]%s", value);
+		}
+		return result;
 	}
-
+	
 	/**
-	 * The getter method for the value property.
-	 * @return the value
+	 * The setter method for the values property.
+	 * @param values the values to set
 	 */
-	public String getValue() {
-		return this.value;
-	}
-
-	/**
-	 * The setter method for the value property.
-	 * @param value the value to set
-	 */
-	public void setValue(String value) {
-		this.value = value;
+	public void setValue(String [] values) {
+		this.values = values;
 	}
 	
 }

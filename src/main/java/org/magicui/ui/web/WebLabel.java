@@ -39,34 +39,20 @@ public final class WebLabel extends AbstractValueComponent<WebTag,String> {
 	 * @see org.magicui.ui.Component#createComponent()
 	 */
 	public WebTag createComponent() {
-		return new WebTag("", "");
+		return new WebTag("%s");
 	}
 
 	/**
 	 * @see org.magicui.ui.Component#getValue()
 	 */
 	public String getValue() {
-		return this.component.getValue();
+		return null; //TODO
 	}
 
 	/**
 	 * @see org.magicui.ui.Component#setValue(java.lang.Object)
 	 */
 	public void setValue(String value) {
-		this.component.setValue(value);
+		this.component.setValues(value);
 	}
-
-	/**
-	 * @see org.magicui.ui.ValueComponent#addListener(java.lang.String, org.magicui.Action)
-	 */
-	public void addListener(String type, Action action) {
-		if (type.equals(EVENT_CLICK)) {
-			this.component.addEvent("onMouseClick", action);
-		} else if (type.equals(EVENT_HOVER)) {
-			
-		} else {
-			return;
-		}
-	}
-
 }
