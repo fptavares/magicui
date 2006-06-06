@@ -17,60 +17,42 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui;
+package org.magicui.ui.menu;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 import org.magicui.Action;
+import org.magicui.ui.ActionItem;
+
+import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
 
 /**
- * ActionItem is a <b>cool</b> class.
+ * Menu is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class ActionItem {
-	private final String place;
-	private final String text;
-	private final Action action;
-	private final String icon;
+public class Menu extends ActionItem {
 	/**
 	 * @param text
 	 * @param action
-	 * @param place 
-	 * @param icon 
+	 * @param place
+	 * @param icon
 	 */
-	public ActionItem(final String text, final Action action, final String place, final String icon) {
-		this.text = text;
-		this.action = action;
-		this.place = place;
-		this.icon = icon;
+	public Menu(String text, String place, String icon) {
+		super(text, null, place, icon);
 	}
+
+	final Map<String, ActionItem> items = new HashMap<String, ActionItem>();
+	
 	/**
-	 * The getter method for the action property.
-	 * @return the action
+	 * 
 	 */
-	public final Action getAction() {
-		return this.action;
-	}
-	/**
-	 * The getter method for the text property.
-	 * @return the text
-	 */
-	public final String getText() {
-		return this.text;
-	}
-	/**
-	 * The getter method for the place property.
-	 * @return the place
-	 */
-	public String getPlace() {
-		return this.place;
-	}
-	/**
-	 * The getter method for the icon property.
-	 * @return the icon
-	 */
-	public String getIcon() {
-		return this.icon;
+	public void addItem(String id, ActionItem item) {
+		this.items.put(id, item);
 	}
 }

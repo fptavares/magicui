@@ -52,4 +52,6 @@ public class Globals {
 	public static final String TOOLBAR_BOTTOM = "bottom";
 	public static final String TOOLBAR_LEFT = "left";
 	public static final String TOOLBAR_RIGHT = "right";
+	
+	public static final String KEY_MENU_PREFIX = "menu.";
 }

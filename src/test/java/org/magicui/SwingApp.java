@@ -17,28 +17,37 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui.factory;
+package org.magicui;
 
-import org.magicui.ui.ActionItem;
-import org.magicui.ui.Component;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+
+import org.magicui.exceptions.MagicUIException;
 import org.magicui.ui.View;
+import org.magicui.ui.swing.SwingFactory;
 
 /**
- * ComponentFactory is a <b>cool</b> class.
+ * SwingApp is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public interface ComponentFactory<T> {
-    public Object createWindow(String title, View<? extends T> content);
-    public Component<? extends T> createFrame();
-    public Component<? extends T> createLabel();
+public class SwingApp {
+	
 	/**
-	 * @param nodeName
+	 * @param args
+	 * @throws MagicUIException 
 	 */
-	public Component<? extends T> create(String nodeName);
-    
-    public T createMenuItem(T menu, ActionItem item, View<? extends T> view);
-    public T createMenu(T parentMenu, String name);
+	public static void main(String[] args) throws MagicUIException {
+		final Application<JComponent> app = new Application<JComponent>();
+		app.factory = new SwingFactory();
+		app.registerAction("act1", new Action() {
+			public void act(View container) {
+				JOptionPane.showMessageDialog(null, String.valueOf(container));
+			}
+		});
+		app.start();
+	}
+	
 }

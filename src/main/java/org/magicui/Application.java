@@ -24,13 +24,9 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import javax.swing.JComponent;
-import javax.swing.JOptionPane;
-
 import org.magicui.exceptions.MagicUIException;
 import org.magicui.ui.View;
 import org.magicui.ui.factory.ComponentFactory;
-import org.magicui.ui.swing.SwingFactory;
 import org.magicui.xml.XMLParser;
 
 /**
@@ -52,12 +48,12 @@ public class Application<T> {
 	/**
 	 * The mainView <code>View</code> field.
 	 */
-	private View<T> mainView;
+	private View<? extends T> mainView;
 	
 	/**
 	 * The factory <code>ComponentFactory<T></code> field.
 	 */
-	private ComponentFactory<T> factory;
+	protected ComponentFactory<T> factory;
 	
 	/**
 	 * The actions <code>Map<String,Action></code> field.
@@ -77,7 +73,7 @@ public class Application<T> {
 	 * The getter method for the mainView property.
 	 * @return the mainView
 	 */
-	public final View getMainView() {
+	public final View<? extends T> getMainView() {
 		return this.mainView;
 	}
 
@@ -133,21 +129,6 @@ public class Application<T> {
 	public void start(Object... vars) throws MagicUIException {
 		this.mainView = XMLParser.load(this, this.config.getMainWidget(), vars);
 		this.factory.createWindow(this.config.getName(), this.mainView);
-	}
-	
-	/**
-	 * @param args
-	 * @throws MagicUIException 
-	 */
-	public static void main(String[] args) throws MagicUIException {
-		final Application<JComponent> app = new Application<JComponent>();
-		app.factory = new SwingFactory();
-		app.registerAction("act1", new Action() {
-			public void act(View container) {
-				JOptionPane.showMessageDialog(null, String.valueOf(container));
-			}
-		});
-		app.start();
 	}
 	
 }

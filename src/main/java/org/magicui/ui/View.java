@@ -49,9 +49,9 @@ public interface View<C> extends Component<C> {
 	void setToolbars(Collection<ActionItem> top, Collection<ActionItem> bottom, Collection<ActionItem> left, Collection<ActionItem> right);
 
 	/**
-	 * @param menu
+	 * @param menus
 	 */
-	void setMenus(Collection<ActionItem> menu);
+	void setMenus(Collection<Object> menus);
 	
 	/**
 	 * The getter method for the bottom property.
@@ -69,7 +69,7 @@ public interface View<C> extends Component<C> {
 	 * The getter method for the menu property.
 	 * @return the menu
 	 */
-	public Collection<ActionItem> getMenu();
+	public Collection<Object> getMenu();
 
 	/**
 	 * The getter method for the right property.

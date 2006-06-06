@@ -19,6 +19,16 @@
  */
 package org.magicui.xml;
 
+import static org.magicui.Globals.ATTR_ICON;
+import static org.magicui.Globals.ATTR_ID;
+import static org.magicui.Globals.ATTR_KEY;
+import static org.magicui.Globals.ATTR_MENU;
+import static org.magicui.Globals.ATTR_NAME;
+import static org.magicui.Globals.ATTR_TOOLBAR;
+import static org.magicui.Globals.ELEMENT_ACTION;
+import static org.magicui.Globals.ELEMENT_VAR;
+import static org.magicui.Globals.ELEMENT_VIEW;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
@@ -26,7 +36,6 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Map;
 
-import javax.swing.JToolBar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -42,13 +51,12 @@ import org.magicui.ui.Component;
 import org.magicui.ui.ValueComponent;
 import org.magicui.ui.View;
 import org.magicui.ui.factory.ComponentFactory;
+import org.magicui.ui.menu.MenuParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import static org.magicui.Globals.*;
 
 /**
  * This class bla bla bla.
@@ -71,10 +79,9 @@ public class XMLParser<T> {
 	 * @param app
 	 * @param widget
 	 * @param vars
-	 * @return 
 	 * @throws MagicUIException
 	 */
-	public static <T> View<T> load(Application<T> app, final String widget, Object [] vars) throws MagicUIException {
+	public static <T> View<? extends T> load(Application<T> app, final String widget, Object [] vars) throws MagicUIException {
 		return new XMLParser<T>(app, widget, vars).start(widget, vars);
 	}
 	
@@ -93,7 +100,7 @@ public class XMLParser<T> {
 		this.app = app;
 	}
 	
-	private View<T> start(final String widget, Object [] vars) throws MagicUIException {
+	private View<? extends T> start(final String widget, Object [] vars) throws MagicUIException {
 		try {
 			
 			final DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
@@ -106,7 +113,7 @@ public class XMLParser<T> {
 			Collection<ActionItem> bottom = null;
 			Collection<ActionItem> left = null;
 			Collection<ActionItem> right = null;
-			Collection<ActionItem> menu = null;
+			LinkedList<ActionItem> menu = null;
 			int varCounter = 0;
 			Node tempNode = null;
 			final NodeList nodes = doc.getChildNodes().item(0).getChildNodes();
@@ -121,6 +128,11 @@ public class XMLParser<T> {
 						
 						// <action>
 					} else if (node.getNodeName().equals(ELEMENT_ACTION)) {
+						// id
+						final Action action = this.app.getAction(getAttribute(node, ATTR_ID));
+						if (action == null) {
+							continue; // action wasn't registered, so ignore it
+						}
 						// key
 						tempNode = node.getAttributes().getNamedItem(ATTR_KEY);
 						final String text;
@@ -129,8 +141,6 @@ public class XMLParser<T> {
 						} else {
 							text = messageFor(tempNode.getNodeValue());
 						}
-						// id
-						final Action action = this.app.getAction(getAttribute(node, ATTR_ID));
 						// icon
 						String icon = null;
 						if (hasAttribute(node, ATTR_ICON)) {
@@ -174,12 +184,12 @@ public class XMLParser<T> {
 				}
 			}
 			
-			final View<T> view = (View<T>) factory.create(rootComponent.getNodeName());
+			final View<? extends T> view = (View<? extends T>) this.factory.create(rootComponent.getNodeName());
 			
 			parse(view, rootComponent.getChildNodes()); // parse child elements
 
 			view.setToolbars(top, bottom, left, right);
-			view.setMenus(menu);
+			view.setMenus(new MenuParser<T>(this.app, view).parse(menu));
 
 			return view;
 
@@ -259,13 +269,13 @@ public class XMLParser<T> {
         			final Node subNode = subNodes.item(j);
         			if (subNode.getNodeName().equals("item")) {
             			((CollectionComponent) component).addItem(
-            					subNode.getAttributes().getNamedItem("key").getNodeValue(),
-            					subNode.getAttributes().getNamedItem("value").getNodeValue()
+            					messageFor(getAttribute(subNode, ("key"))),
+            					getAttribute(subNode, "value")
             					);
         			} else if (subNode.getNodeName().equals("event")) {
             			((ValueComponent) component).addListener(
-            					subNode.getAttributes().getNamedItem("type").getNodeValue(),
-            					this.app.getAction(subNode.getAttributes().getNamedItem("action").getNodeValue())
+            					getAttribute(subNode, "type"),
+            					this.app.getAction(getAttribute(subNode, "action"))
             					);
         			}
         		}

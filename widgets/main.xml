@@ -1,5 +1,7 @@
 <widget>
-	<action id="act1" key="action.test" menu="tools" toolbar="top" icon="images/tux.gif" />
+	<action id="act1" key="action.act1" shortcutKey="action.act1.shortcut"
+		 menu="file.import" toolbar="left" icon="images/tux.gif" />
+	<action id="act2" menu="tools" />
 
     <view id="dsf">
         <label id="cena2" key="main.label.cena2">

@@ -34,7 +34,7 @@ public abstract class AbstractContainer<C> extends AbstractComponent<C> implemen
 	Collection<ActionItem> bottom;
 	Collection<ActionItem> left;
 	Collection<ActionItem> right;
-	Collection<ActionItem> menu;
+	Collection<Object> menu;
 
 	/**
 	 * @see org.magicui.ui.View#add(org.magicui.ui.Component, int, int, int, int)
@@ -62,7 +62,7 @@ public abstract class AbstractContainer<C> extends AbstractComponent<C> implemen
 	/**
 	 * @see org.magicui.ui.View#setMenus(java.util.Collection)
 	 */
-	public void setMenus(Collection<ActionItem> menu) {
+	public void setMenus(Collection<Object> menu) {
 		this.menu = menu;
 	}
 
@@ -86,7 +86,7 @@ public abstract class AbstractContainer<C> extends AbstractComponent<C> implemen
 	 * The getter method for the menu property.
 	 * @return the menu
 	 */
-	public final Collection<ActionItem> getMenu() {
+	public final Collection<Object> getMenu() {
 		return this.menu;
 	}
 
