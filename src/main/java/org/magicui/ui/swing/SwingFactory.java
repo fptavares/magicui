@@ -80,9 +80,9 @@ public class SwingFactory extends AbstractComponentFactory<JComponent> {
     	if (content.getRight() != null) {
     		frame.getContentPane().add(convert(content, content.getRight()), BorderLayout.EAST);
     	} 
-    	if (content.getMenu() != null) {
+    	if (content.getMenus() != null) {
     		final JMenuBar menuBar = new JMenuBar();
-    		for (Object menu : content.getMenu()) {
+    		for (Object menu : content.getMenus()) {
     			menuBar.add((JMenu) menu);
     		}
     		frame.setJMenuBar(menuBar);

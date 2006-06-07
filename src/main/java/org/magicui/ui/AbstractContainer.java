@@ -86,7 +86,7 @@ public abstract class AbstractContainer<C> extends AbstractComponent<C> implemen
 	 * The getter method for the menu property.
 	 * @return the menu
 	 */
-	public final Collection<Object> getMenu() {
+	public final Collection<Object> getMenus() {
 		return this.menu;
 	}
 

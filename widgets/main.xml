@@ -1,10 +1,12 @@
 <widget>
+	<var name="textForLabel" />
+	
 	<action id="act1" key="action.act1" shortcutKey="action.act1.shortcut"
 		 menu="file.import" toolbar="left" icon="images/tux.gif" />
 	<action id="act2" menu="tools" />
 
     <view id="dsf">
-        <label id="cena2" key="main.label.cena2">
+        <label id="cena2" key="main.label.cena2" name="textForLabel">
         	<event type="click" action="act1" />
         </label>
     </view>

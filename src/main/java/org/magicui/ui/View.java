@@ -55,31 +55,31 @@ public interface View<C> extends Component<C> {
 	
 	/**
 	 * The getter method for the bottom property.
-	 * @return the bottom
+	 * @return the bottom toolbar items
 	 */
 	public Collection<ActionItem> getBottom();
 
 	/**
 	 * The getter method for the left property.
-	 * @return the left
+	 * @return the left toolbar items
 	 */
 	public Collection<ActionItem> getLeft();
 
 	/**
-	 * The getter method for the menu property.
-	 * @return the menu
+	 * The getter method for the menus property.
+	 * @return the menus
 	 */
-	public Collection<Object> getMenu();
+	public Collection<Object> getMenus();
 
 	/**
 	 * The getter method for the right property.
-	 * @return the right
+	 * @return the right toolbar items
 	 */
 	public Collection<ActionItem> getRight();
 
 	/**
 	 * The getter method for the top property.
-	 * @return the top
+	 * @return the top toolbar items
 	 */
 	public Collection<ActionItem> getTop();
 

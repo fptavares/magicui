@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigation>
+	<action id="xyz">
+		<navTo view="stuff" />
+		<switch before="personal-data" now="organization" />
+		<hide />
+		
+		<transferData from="combo" to="label" />
+		<message key="my.msg" />
+		<popup key="my.toaster.msg" />
+		<status key="my.status.msg" />
+		
+	</action>
+</navigation>

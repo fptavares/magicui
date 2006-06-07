@@ -123,8 +123,8 @@ public class XMLParser<T> {
 				if (node.getNodeType() == Node.ELEMENT_NODE) {
 					// <var>
 					if (node.getNodeName().equals(ELEMENT_VAR)) {
-						this.varMap.put(node.getAttributes().getNamedItem(ATTR_NAME).getNodeValue(), vars[varCounter]);
-						varCounter++;
+						this.varMap.put(node.getAttributes().getNamedItem(
+								ATTR_NAME).getNodeValue(), vars[varCounter++]);
 						
 						// <action>
 					} else if (node.getNodeName().equals(ELEMENT_ACTION)) {

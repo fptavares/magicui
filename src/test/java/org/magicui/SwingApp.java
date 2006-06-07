@@ -47,7 +47,7 @@ public class SwingApp {
 				JOptionPane.showMessageDialog(null, String.valueOf(container));
 			}
 		});
-		app.start();
+		app.start("This is my test string. Do you like it?");
 	}
 	
 }
