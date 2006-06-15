@@ -61,6 +61,11 @@ public class Application<T> {
 	private final Map<String, Action> actions = new Hashtable<String, Action>();
 	
 	/**
+	 * The app <code>Application<?></code> field.
+	 */
+	private static Application<?> app;
+	
+	/**
 	 * @throws MagicUIException 
 	 * 
 	 */
@@ -118,7 +123,7 @@ public class Application<T> {
 	 * @return The action
 	 */
 	public Action getAction(String id) {
-		return actions.get(id);
+		return this.actions.get(id);
 	}
 	
 	/**
@@ -129,6 +134,24 @@ public class Application<T> {
 	public void start(Object... vars) throws MagicUIException {
 		this.mainView = XMLParser.load(this, this.config.getMainWidget(), vars);
 		this.factory.createWindow(this.config.getName(), this.mainView);
+	}
+	
+	/**
+	 * @return
+	 * @throws MagicUIException
+	 */
+	public static Application<?> create() throws MagicUIException {
+		if (app == null) {
+			app = new Application<Object>();
+		}
+		return app;
+	}
+	
+	/**
+	 * @return
+	 */
+	public static Application<?> getInstance() {
+		return app;
 	}
 	
 }

@@ -17,36 +17,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui;
+package org.magicui.actions;
 
-import javax.swing.JComponent;
-import javax.swing.JOptionPane;
-
-import org.magicui.exceptions.MagicUIException;
-import org.magicui.ui.swing.SwingFactory;
+import org.magicui.Action;
 
 /**
- * SwingApp is a <b>cool</b> class.
+ * AbstractAction is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class SwingApp {
-	
-	/**
-	 * @param args
-	 * @throws MagicUIException 
-	 */
-	public static void main(String[] args) throws MagicUIException {
-		final Application<JComponent> app = new Application<JComponent>();
-		app.factory = new SwingFactory();
-		app.registerAction("act1", new Action() {
-			public void act(State state) {
-				JOptionPane.showMessageDialog(null, String.valueOf(state));
-			}
-		});
-		app.start("This is my test string. Do you like it?");
-	}
-	
+public abstract class AbstractAction implements Action {
+
 }

@@ -20,34 +20,54 @@
 package org.magicui.ui;
 
 import java.util.Collection;
+import java.util.Hashtable;
+
+import org.magicui.State;
 
 /**
- * AbstractContainer is a <b>cool</b> class.
+ * AbstractView is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  * @param <C> The type of the component
  */
-public abstract class AbstractContainer<C> extends AbstractComponent<C> implements View<C> {
-	Collection<ActionItem> top;
-	Collection<ActionItem> bottom;
-	Collection<ActionItem> left;
-	Collection<ActionItem> right;
-	Collection<Object> menu;
+public abstract class AbstractView<C> extends AbstractComponent<C> implements View<C> {
+	private Collection<ActionItem> top;
+	private Collection<ActionItem> bottom;
+	private Collection<ActionItem> left;
+	private Collection<ActionItem> right;
+	private Collection<Object> menu;
+	
+	private State state = null;
+	
+	/**
+	 * The components <code>Hashtable</code> field.
+	 */
+	private final Hashtable<String, Component<?>> components =
+		new Hashtable<String, Component<?>>();
+	
 
 	/**
 	 * @see org.magicui.ui.View#add(org.magicui.ui.Component, int, int, int, int)
 	 */
-	public final void add(Component component, int x, int y, int xWeight, int yWeight) {
+	public final void add(Component<?> component, int x, int y, int xWeight, int yWeight) {
 		component.setParent(this);
+		this.components.put(component.getId(), component);
 		addComponent(component, x, y, xWeight, yWeight);
 	}
 
 	/**
 	 * 
 	 */
-	protected abstract void addComponent(Component component, int x, int y, int xWeight, int yWeight);
+	protected abstract void addComponent(Component<?> component, int x, int y, int xWeight, int yWeight);
+	
+	/**
+	 * @see org.magicui.ui.View#getComponentById(java.lang.String)
+	 */
+	public Component<?> getComponentById(String id) {
+		return null;
+	}
 	
 	/**
 	 * @see org.magicui.ui.View#setToolbars(java.util.Collection, java.util.Collection, java.util.Collection, java.util.Collection)
@@ -104,6 +124,16 @@ public abstract class AbstractContainer<C> extends AbstractComponent<C> implemen
 	 */
 	public final Collection<ActionItem> getTop() {
 		return this.top;
+	}
+	
+	/**
+	 * @see org.magicui.ui.View#getState()
+	 */
+	public State getState() {
+		if (this.state == null) {
+			this.state = new ViewState(this);
+		}
+		return this.state;
 	}
 
 }

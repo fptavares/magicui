@@ -21,6 +21,8 @@ package org.magicui.ui;
 
 import java.util.Collection;
 
+import org.magicui.State;
+
 /**
  * View is a <b>cool</b> class.
  * 
@@ -38,7 +40,14 @@ public interface View<C> extends Component<C> {
 	 * @param xWeight
 	 * @param yWeight
 	 */
-	void add(Component component, int xCounter, int yCounter, int xWeight, int yWeight);
+	void add(Component<?> component, int xCounter, int yCounter, int xWeight, int yWeight);
+	
+	/**
+	 * Get a component by it's id.
+	 * @param id The compnent's id
+	 * @return The component
+	 */
+	public Component<?> getComponentById(final String id);
 
 	/**
 	 * @param top
@@ -82,5 +91,11 @@ public interface View<C> extends Component<C> {
 	 * @return the top toolbar items
 	 */
 	public Collection<ActionItem> getTop();
+	
+	/**
+	 * Return a <code>State</code> instance for this view.
+	 * @return The state instance
+	 */
+	public State getState();
 
 }

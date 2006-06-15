@@ -19,34 +19,24 @@
  */
 package org.magicui;
 
-import javax.swing.JComponent;
-import javax.swing.JOptionPane;
-
-import org.magicui.exceptions.MagicUIException;
-import org.magicui.ui.swing.SwingFactory;
-
 /**
- * SwingApp is a <b>cool</b> class.
+ * State is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class SwingApp {
-	
+public interface State {
 	/**
-	 * @param args
-	 * @throws MagicUIException 
+	 * Get the value for a component.
+	 * @param id The id
+	 * @return The current value
 	 */
-	public static void main(String[] args) throws MagicUIException {
-		final Application<JComponent> app = new Application<JComponent>();
-		app.factory = new SwingFactory();
-		app.registerAction("act1", new Action() {
-			public void act(State state) {
-				JOptionPane.showMessageDialog(null, String.valueOf(state));
-			}
-		});
-		app.start("This is my test string. Do you like it?");
-	}
-	
+	public Object get(final String id);
+	/**
+	 * Set the value for a component.
+	 * @param id The id
+	 * @param value The value
+	 */
+	public void set(final String id, final Object value);
 }

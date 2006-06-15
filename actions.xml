@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<navigation>
+<actions>
 	<action id="xyz">
 		<navTo view="stuff" />
 		<switch before="personal-data" now="organization" />
@@ -11,4 +11,4 @@
 		<status key="my.status.msg" />
 		
 	</action>
-</navigation>
+</actions>

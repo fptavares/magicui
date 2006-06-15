@@ -39,7 +39,7 @@ import org.magicui.ui.AbstractValueComponent;
 public abstract class AbstractSwingComponent<C extends JComponent, T> extends AbstractValueComponent<C, T> {
 
 	/**
-	 * @see org.magicui.ui.Component#addListener(String, org.magicui.Action)
+	 * @see org.magicui.ui.ValueComponent#addListener(String, org.magicui.Action)
 	 */
 	public void addListener(String type, final Action action) {
 		final MouseAdapter listener;
@@ -47,14 +47,14 @@ public abstract class AbstractSwingComponent<C extends JComponent, T> extends Ab
 			listener = new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					action.act(AbstractSwingComponent.this.parent);
+					action.act(AbstractSwingComponent.this.parent.getState());
 				}
 			};
 		} else if (type.equals(EVENT_HOVER)) {
 			listener = new MouseAdapter() {
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					action.act(AbstractSwingComponent.this.parent);
+					action.act(AbstractSwingComponent.this.parent.getState());
 				}
 			};
 		} else {

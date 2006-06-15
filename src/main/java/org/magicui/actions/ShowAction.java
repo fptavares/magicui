@@ -17,36 +17,52 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui;
+package org.magicui.actions;
 
-import javax.swing.JComponent;
-import javax.swing.JOptionPane;
-
-import org.magicui.exceptions.MagicUIException;
-import org.magicui.ui.swing.SwingFactory;
+import org.magicui.State;
 
 /**
- * SwingApp is a <b>cool</b> class.
+ * ShowAction is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class SwingApp {
+public class ShowAction extends AbstractAction {
 	
 	/**
-	 * @param args
-	 * @throws MagicUIException 
+	 * The view <code>String</code> field.
 	 */
-	public static void main(String[] args) throws MagicUIException {
-		final Application<JComponent> app = new Application<JComponent>();
-		app.factory = new SwingFactory();
-		app.registerAction("act1", new Action() {
-			public void act(State state) {
-				JOptionPane.showMessageDialog(null, String.valueOf(state));
-			}
-		});
-		app.start("This is my test string. Do you like it?");
-	}
+	private final String view;
 	
+	/**
+	 * The place <code>String</code> field.
+	 */
+	private final String place;
+	
+	/**
+	 * The vars <code>Object[]</code> field.
+	 */
+	private final Object [] vars;
+
+
+	/**
+	 * @param view
+	 * @param place
+	 * @param vars
+	 */
+	public ShowAction(final String view, final String place, final Object[] vars) {
+		this.view = view;
+		this.place = place;
+		this.vars = vars;
+	}
+
+
+	/**
+	 * @see org.magicui.Action#act(State)
+	 */
+	public void act(State state) {
+		state.set("..", /* TODO: view */);
+	}
+
 }

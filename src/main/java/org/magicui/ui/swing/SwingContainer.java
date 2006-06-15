@@ -79,7 +79,7 @@ public class SwingContainer extends AbstractSwingContainer<JPanel> {
 	}
 	
 	/**
-	 * @see org.magicui.ui.AbstractContainer#addComponent(org.magicui.ui.Component, int, int, int, int)
+	 * @see org.magicui.ui.AbstractView#addComponent(org.magicui.ui.Component, int, int, int, int)
 	 */
 	public void addComponent(Component component, int x, int y, int xWeight, int yHeight) {
 		addComponent((JComponent) component.getComponent(), x, y, xWeight, yHeight);

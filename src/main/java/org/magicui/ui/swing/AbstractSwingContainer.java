@@ -19,7 +19,7 @@
  */
 package org.magicui.ui.swing;
 
-import org.magicui.ui.AbstractContainer;
+import org.magicui.ui.AbstractView;
 
 /**
  * AbstractSwingContainer is a <b>cool</b> class.
@@ -28,10 +28,10 @@ import org.magicui.ui.AbstractContainer;
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public abstract class AbstractSwingContainer<C> extends AbstractContainer<C> {
+public abstract class AbstractSwingContainer<C> extends AbstractView<C> {
 
 	/**
-	 * @see org.magicui.ui.Component#addListener(java.lang.String, java.lang.String)
+	 * @see org.magicui.ui.ValueComponent#addListener(java.lang.String, java.lang.String)
 	 */
 	public void addListener(String type, String action) {
 		// TODO Auto-generated method stub

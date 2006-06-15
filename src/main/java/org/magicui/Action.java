@@ -19,7 +19,6 @@
  */
 package org.magicui;
 
-import org.magicui.ui.View;
 
 /**
  * Action is a <b>cool</b> class.
@@ -30,7 +29,7 @@ import org.magicui.ui.View;
  */
 public interface Action {
 	/**
-	 * @param container The container
+	 * @param state The container
 	 */
-	public void act(View container);
+	public void act(State state);
 }
