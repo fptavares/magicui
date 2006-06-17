@@ -17,34 +17,41 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui.factory;
+package org.magicui.ui.swing;
 
-import static org.magicui.Globals.*;
-
-import org.magicui.ui.Component;
-
-
+import javax.swing.JRootPane;
 
 /**
- * AbstractComponentFactory is a <b>cool</b> class.
+ * SwingPlaceholder is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public abstract class AbstractComponentFactory<T> implements ComponentFactory<T> {
+public class SwingPlaceholder
+		extends AbstractSwingComponent<JRootPane, SwingContainer> {
+	private SwingContainer view;
 
 	/**
-	 * @see org.magicui.ui.factory.ComponentFactory#create(java.lang.String)
+	 * @see org.magicui.ui.ValueComponent#getValue()
 	 */
-	public Component<? extends T> create(String type) {
-		if (type.equals(ELEMENT_LABEL)) {
-			return createLabel();
-		} else if (type.equals(ELEMENT_VIEW)) {
-			return createFrame();
-		} else if (type.equals(ELEMENT_PLACE)) {
-			return createPlaceholder();
-		}
-		throw new RuntimeException("No such type: " + type); // TODO: temp
+	public SwingContainer getValue() {
+		return this.view;
 	}
+
+	/**
+	 * @see org.magicui.ui.ValueComponent#setValue(java.lang.Object)
+	 */
+	public void setValue(SwingContainer value) {
+		this.view = value;
+		this.component.setContentPane(value.getComponent());
+	}
+
+	/**
+	 * @see org.magicui.ui.Component#createComponent()
+	 */
+	public JRootPane createComponent() {
+		return new JRootPane();
+	}
+
 }

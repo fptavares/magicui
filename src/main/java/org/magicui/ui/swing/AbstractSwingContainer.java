@@ -30,12 +30,4 @@ import org.magicui.ui.AbstractView;
  */
 public abstract class AbstractSwingContainer<C> extends AbstractView<C> {
 
-	/**
-	 * @see org.magicui.ui.ValueComponent#addListener(java.lang.String, java.lang.String)
-	 */
-	public void addListener(String type, String action) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

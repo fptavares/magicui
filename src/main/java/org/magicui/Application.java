@@ -19,6 +19,7 @@
  */
 package org.magicui;
 
+import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -61,6 +62,12 @@ public class Application<T> {
 	private final Map<String, Action> actions = new Hashtable<String, Action>();
 	
 	/**
+	 * The views <code>Map<String,View<? extends T>></code> field.
+	 */
+	private final Map<String, View<? extends T>> views =
+		new Hashtable<String, View<? extends T>>();
+	
+	/**
 	 * The app <code>Application<?></code> field.
 	 */
 	private static Application<?> app;
@@ -91,8 +98,9 @@ public class Application<T> {
 	}
 	
 	/**
-	 * @param actionId
-	 * @param action
+	 * Register an action.
+	 * @param actionId The action's id
+	 * @param action The action implementation
 	 */
 	public void registerAction(String actionId, Action action) {
 		this.actions.put(actionId, action);
@@ -107,8 +115,9 @@ public class Application<T> {
 	}
 	
 	/**
-	 * @param key
-	 * @return
+	 * Get a i18n message.
+	 * @param key The message's key
+	 * @return The message
 	 */
 	public String getMessage(String key) {
 		try {
@@ -119,12 +128,26 @@ public class Application<T> {
 	}
 	
 	/**
-	 * @param id
+	 * Get an action's implementation by it's id.
+	 * @param id The action's id
 	 * @return The action
 	 */
 	public Action getAction(String id) {
 		return this.actions.get(id);
 	}
+    
+    /**
+     * Get a view's implementation by it's id.
+     * @param id The view's id
+     * @return The view
+     */
+    public View<? extends T> getView(String id) {
+        if (this.views.containsKey(id)) {
+            return this.views.get(id);
+        } else {
+            loadWidget(id, vars); // TODO
+        }
+    }
 	
 	/**
 	 * Start the application.
@@ -132,12 +155,36 @@ public class Application<T> {
 	 * @throws MagicUIException 
 	 */
 	public void start(Object... vars) throws MagicUIException {
-		this.mainView = XMLParser.load(this, this.config.getMainWidget(), vars);
+		this.mainView = loadWidget(this.config.getMainWidget(), vars);
 		this.factory.createWindow(this.config.getName(), this.mainView);
 	}
 	
 	/**
-	 * @return
+	 * Load a widget.
+	 * @param widget The widget's name
+	 * @param vars The widget's arguments
+	 * @return The widget's main view
+	 * @throws MagicUIException 
+	 */
+	public View<? extends T> loadWidget(final String widget, Object... vars)
+			throws MagicUIException {
+		View<? extends T> widgetMainView = null;
+		final Collection<View<? extends T>> widgetViews =
+			XMLParser.load(this, widget, vars);
+		for (View<? extends T> view : widgetViews) {
+			if (widgetMainView == null) {
+				widgetMainView = view;
+				this.views.put(widget, view);
+			} else {
+				this.views.put(view.getId(), view);
+			}
+		}
+		return widgetMainView;
+	}
+	
+	/**
+	 * Create the application instance.
+	 * @return The application
 	 * @throws MagicUIException
 	 */
 	public static Application<?> create() throws MagicUIException {
@@ -148,7 +195,8 @@ public class Application<T> {
 	}
 	
 	/**
-	 * @return
+	 * Access the application singleton instance.
+	 * @return The application singleton
 	 */
 	public static Application<?> getInstance() {
 		return app;

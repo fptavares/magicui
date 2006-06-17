@@ -19,6 +19,7 @@
  */
 package org.magicui.actions;
 
+import org.magicui.Application;
 import org.magicui.State;
 
 /**
@@ -62,7 +63,7 @@ public class ShowAction extends AbstractAction {
 	 * @see org.magicui.Action#act(State)
 	 */
 	public void act(State state) {
-		state.set("..", /* TODO: view */);
+		state.set(this.place, Application.getInstance().);
 	}
 
 }

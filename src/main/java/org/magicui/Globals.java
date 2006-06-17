@@ -28,6 +28,7 @@ package org.magicui;
  */
 public class Globals {
 	public static final String ELEMENT_VIEW = "view";
+	public static final String ELEMENT_PLACE = "place";
 	public static final String ELEMENT_LABEL = "label";
 	public static final String ELEMENT_INPUT = "input";
 	public static final String ELEMENT_LIST = "list";

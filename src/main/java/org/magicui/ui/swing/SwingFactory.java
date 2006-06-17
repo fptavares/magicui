@@ -54,6 +54,13 @@ public class SwingFactory extends AbstractComponentFactory<JComponent> {
     public Component<? extends JComponent> createFrame() {
         return new SwingContainer();
     }
+    
+    /**
+     * @see org.magicui.ui.factory.ComponentFactory#createPlaceholder()
+     */
+    public Component<? extends JComponent> createPlaceholder() {
+    	return new SwingPlaceholder();
+    }
 
     /**
      * @see org.magicui.ui.factory.ComponentFactory#createLabel()
@@ -166,17 +173,15 @@ public class SwingFactory extends AbstractComponentFactory<JComponent> {
 			if (item.getIcon() == null) {
 				return new MyAction(item.getText()) {
 					public void actionPerformed(ActionEvent e) {
-						item.getAction().act(content);
-					}
-				};
-			} else {
-				return new MyAction(
-						item.getText(), new ImageIcon(item.getIcon())) {
-					public void actionPerformed(ActionEvent e) {
-						item.getAction().act(content);
+						item.getAction().act(content.getState());
 					}
 				};
 			}
+			return new MyAction(item.getText(), new ImageIcon(item.getIcon())) {
+				public void actionPerformed(ActionEvent e) {
+					item.getAction().act(content.getState());
+				}
+			};
 		}
 		
 	}

@@ -33,6 +33,7 @@ import org.magicui.ui.View;
 public interface ComponentFactory<T> {
     public Object createWindow(String title, View<? extends T> content);
     public Component<? extends T> createFrame();
+    public Component<? extends T> createPlaceholder();
     public Component<? extends T> createLabel();
 	/**
 	 * @param nodeName
