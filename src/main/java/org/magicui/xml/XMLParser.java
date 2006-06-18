@@ -24,7 +24,10 @@ import static org.magicui.Globals.ATTR_ID;
 import static org.magicui.Globals.ATTR_KEY;
 import static org.magicui.Globals.ATTR_MENU;
 import static org.magicui.Globals.ATTR_NAME;
+import static org.magicui.Globals.ATTR_PROPERTY;
 import static org.magicui.Globals.ATTR_TOOLBAR;
+import static org.magicui.Globals.ATTR_VALUE;
+import static org.magicui.Globals.ATTR_VIEW;
 import static org.magicui.Globals.ELEMENT_ACTION;
 import static org.magicui.Globals.ELEMENT_VAR;
 import static org.magicui.Globals.ELEMENT_VIEW;
@@ -44,6 +47,9 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.magicui.Action;
 import org.magicui.Application;
 import org.magicui.Globals;
+import org.magicui.actions.ActionFactory;
+import org.magicui.actions.CompositeAction;
+import org.magicui.actions.UIAction;
 import org.magicui.exceptions.MagicUIException;
 import org.magicui.ui.ActionItem;
 import org.magicui.ui.CollectionComponent;
@@ -53,6 +59,7 @@ import org.magicui.ui.View;
 import org.magicui.ui.factory.ComponentFactory;
 import org.magicui.ui.menu.MenuParser;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -82,8 +89,9 @@ public class XMLParser<T> {
      * @throws MagicUIException
      */
     public static <T> Collection<View<? extends T>> load(Application<T> app,
-            final String widget, Object [] vars) throws MagicUIException {
-        return new XMLParser<T>(app, widget, vars).start(widget, vars);
+            final String widget, final boolean standalone, Object [] vars)
+            throws MagicUIException {
+        return new XMLParser<T>(app, widget, vars).start(widget, standalone, vars);
     }
 
     /**
@@ -93,7 +101,7 @@ public class XMLParser<T> {
      * @throws MagicUIException 
      */
     public XMLParser(Application<T> app, final String widget, Object [] vars)
-    throws MagicUIException {
+            throws MagicUIException {
 
         this.varMap = new Hashtable<String, Object>(vars.length);
 
@@ -101,7 +109,8 @@ public class XMLParser<T> {
         this.app = app;
     }
 
-    private Collection<View<? extends T>> start(final String widget, Object [] vars) throws MagicUIException {
+    private Collection<View<? extends T>> start(final String widget,
+            final boolean standalone, Object [] vars) throws MagicUIException {
         try {
 
             final DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
@@ -109,7 +118,7 @@ public class XMLParser<T> {
             final InputSource is = new InputSource("widgets/" + widget + ".xml");
             final Document doc = builder.parse(is);
 
-            return parse(widget, vars, doc);
+            return parse(widget, standalone, vars, doc);
 
         } catch(SAXException e) {
             throw new MagicUIException(e);
@@ -127,7 +136,9 @@ public class XMLParser<T> {
      * @return
      * @throws MagicUIException
      */
-    private Collection<View<? extends T>> parse(final String widget, Object[] vars, final Document doc) throws MagicUIException {
+    private Collection<View<? extends T>> parse(final String widget,
+            final boolean standalone, Object[] vars, final Document doc)
+            throws MagicUIException {
         final Collection<View<? extends T>> views = new LinkedList<View<? extends T>>();
 
         Collection<ActionItem> top = null;
@@ -139,7 +150,7 @@ public class XMLParser<T> {
         boolean isFirstView = true;
         Node tempNode = null;
         final NodeList nodes = doc.getChildNodes().item(0).getChildNodes();
-        for (int i = 0; i < nodes.getLength()-1; i++) {
+        for (int i = 0; i < nodes.getLength(); i++) {
             final Node node = nodes.item(i);
 
             if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -151,15 +162,22 @@ public class XMLParser<T> {
                     // <action>
                 } else if (node.getNodeName().equals(ELEMENT_ACTION)) {
                     // id
-                    final Action action = this.app.getAction(getAttribute(node, ATTR_ID));
+                    final String id = getAttribute(node, ATTR_ID);
+                    // fetch action
+                    Action action = this.app.getAction(id);
                     if (action == null) {
-                        continue; // action wasn't registered, so ignore it
+                        if (node.hasChildNodes()) { // actions defined in the XML
+                            action = parsePredefinedActions(node.getChildNodes());
+                            this.app.registerAction(id, action);
+                        } else {
+                            continue; // action wasn't registered, so ignore it
+                        }
                     }
                     // key
                     tempNode = node.getAttributes().getNamedItem(ATTR_KEY);
                     final String text;
                     if (tempNode == null) { // use default key
-                        text = messageFor(widget + ".action." + getAttribute(node, ATTR_ID));
+                        text = messageFor(widget + ".action." + id);
                     } else {
                         text = messageFor(tempNode.getNodeValue());
                     }
@@ -190,13 +208,13 @@ public class XMLParser<T> {
                     }
                 } else if (node.getNodeName().equals(ELEMENT_VIEW)) {
                     final View<? extends T> view = (View<? extends T>) this.factory.create(node.getNodeName());
-                    if (isFirstView) {
-                        parseComponents(view, node.getChildNodes(), widget); // parse child elements
+                    parseComponents(view, node.getChildNodes()); // parse child elements
+                    if (!isFirstView) {
+                        view.setId(getAttribute(node, ATTR_ID)); // auxViews have id
+                    } else if (standalone) { // (isFirstView && standalone)
                         view.setToolbars(top, bottom, left, right);
                         view.setMenus(new MenuParser<T>(this.app, view).parse(menu));
                         isFirstView = false;
-                    } else {
-                        parseComponents(view, node.getChildNodes()); // parse child elements
                     }
                     views.add(view);
                 }
@@ -204,6 +222,51 @@ public class XMLParser<T> {
         }
 
         return views;
+    }
+
+    private Action parsePredefinedActions(NodeList childNodes) throws MagicUIException {
+        final Collection<Action> actions = new LinkedList<Action>();
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            final Node node = childNodes.item(i);
+
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                final UIAction action = ActionFactory.create(node.getNodeName());
+                // set the parameters
+                if (node.hasAttributes()) {
+                    final NamedNodeMap attrs = node.getAttributes();
+                    for (int j = 0; j < attrs.getLength(); j++) {
+                        final Node attr = attrs.item(j);
+                        action.setParameter(attr.getNodeName(), attr.getNodeValue());
+                    }
+                }
+                // view related actions have <var>s
+                action.setChildren(parseViewVars(node.getChildNodes()));
+                
+                actions.add(action);
+            }
+        }
+        return new CompositeAction(actions);
+    }
+
+    /**
+     * @param varNodes
+     * @throws MagicUIException 
+     */
+    private Object [] parseViewVars(final NodeList varNodes) throws MagicUIException {
+        Object [] vars = new Object[varNodes.getLength()];
+        for (int j = 0; j < varNodes.getLength(); j++) {
+            final Node var = varNodes.item(j);
+            final Object value;
+            if (hasAttribute(var, ATTR_NAME)) {
+                value = getValueFor(getAttribute(var, ATTR_NAME),
+                        getAttribute(var, ATTR_PROPERTY));
+            } else {
+                value = getAttribute(var, ATTR_VALUE);
+            }
+            
+            vars[j] = value;
+        }
+        return vars;
     }
 
     /**
@@ -237,12 +300,8 @@ public class XMLParser<T> {
     private String messageFor(String key) {
         return this.app.getMessage(key);
     }
-    private void parseComponents(View parent, NodeList nodes)
-    throws MagicUIException {
-        parseComponents(parent, nodes, null);
-    }
-    private void parseComponents(View parent, NodeList nodes, 
-            String viewId) throws MagicUIException {
+    
+    private void parseComponents(View parent, NodeList nodes) throws MagicUIException {
         for (int i = 0; i < nodes.getLength(); i++) {
             final Node node = nodes.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {    // element
@@ -256,13 +315,8 @@ public class XMLParser<T> {
                 String key = null;
 
                 // id
-                final String id;
-                if (viewId == null) {
-                    id = node.getAttributes().getNamedItem("id").getNodeValue();
-                } else {
-                    id = viewId;
-                }
-
+                final String id = node.getAttributes().getNamedItem("id").getNodeValue();
+                
                 // x
                 Node tempNode = node.getAttributes().getNamedItem("x");
                 if (tempNode == null) {
@@ -311,40 +365,51 @@ public class XMLParser<T> {
 
                 if (component instanceof View) {
                     parseComponents((View) component, node.getChildNodes());
+                } else if (node.getNodeName().equals(Globals.ELEMENT_PLACE)) {
+                    if (hasAttribute(node, ATTR_VIEW)) {
+                        this.app.loadWidget(
+                                getAttribute(node, getAttribute(node, ATTR_VIEW)),
+                                parseViewVars(node.getChildNodes()));
+                    }
                 } else {
                     // set value
                     final Object actualValue;
-                    if (name == null) {
-                        actualValue = messageFor(key);
+                    if (name != null) {
+                        actualValue = getValueFor(name, property);
                     } else {
-                        if (property == null) {
-                            actualValue = this.varMap.get(name);
-                        } else {
-                            try {
-                                actualValue = BeanUtils.getProperty(this.varMap.get(name), property);
-                            } catch (IllegalAccessException e) {
-                                throw new MagicUIException(e);
-                            } catch (InvocationTargetException e) {
-                                throw new MagicUIException(e);
-                            } catch (NoSuchMethodException e) {
-                                throw new MagicUIException(e);
-                            }
-                        }
+                        actualValue = messageFor(key);
                     }
                     ((ValueComponent) component).setValue(actualValue);
-                    // set id
-                    component.setId(id);
                 }
+                // set id
+                component.setId(id);
 
                 if (parent != null) {
                     parent.add(component, this.xCounter, this.yCounter, xWeight, yWeight);
                 }
 
-            } else if ((node.getNodeType() == Node.TEXT_NODE) // text node
-                    && (!node.getNodeValue().matches("^\\s$"))) { // !whitespace
-                /*bean.getParent()
-                    .set(bean.getName(), node.getNodeValue().trim());*/
             }
+        }
+    }
+
+    /**
+     * @param name
+     * @param property
+     * @return The actual value of the object/property
+     * @throws MagicUIException
+     */
+    private Object getValueFor(String name, String property) throws MagicUIException {
+        if (property == null) {
+            return this.varMap.get(name);
+        }
+        try {
+            return BeanUtils.getProperty(this.varMap.get(name), property);
+        } catch (IllegalAccessException e) {
+            throw new MagicUIException(e);
+        } catch (InvocationTargetException e) {
+            throw new MagicUIException(e);
+        } catch (NoSuchMethodException e) {
+            throw new MagicUIException(e);
         }
     }
 

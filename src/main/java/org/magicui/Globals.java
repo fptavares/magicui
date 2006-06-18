@@ -44,10 +44,16 @@ public class Globals {
 	public static final String ATTR_ID = "id";
 	public static final String ATTR_NAME = "name";
 	public static final String ATTR_PROPERTY = "property";
+    public static final String ATTR_VALUE = "property";
 	public static final String ATTR_KEY = "key";
 	public static final String ATTR_MENU = "menu";
 	public static final String ATTR_TOOLBAR = "toolbar";
 	public static final String ATTR_ICON = "icon";
+    public static final String ATTR_VIEW = "view";
+    public static final String ATTR_ACTION_PLACE = "place";
+    public static final String ATTR_ACTION_VIEW = "view";
+    public static final String ATTR_ACTION_FROM = "from";
+    public static final String ATTR_ACTION_TO = "to";
 	
 	public static final String TOOLBAR_TOP = "top";
 	public static final String TOOLBAR_BOTTOM = "bottom";
@@ -55,4 +61,7 @@ public class Globals {
 	public static final String TOOLBAR_RIGHT = "right";
 	
 	public static final String KEY_MENU_PREFIX = "menu.";
+    
+    public static final Object UIACTION_SHOW = "show";
+    public static final Object UIACTION_TRANSFERDATA = "transferData";
 }

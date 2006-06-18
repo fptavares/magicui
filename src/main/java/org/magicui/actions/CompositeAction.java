@@ -17,43 +17,43 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui.swing;
+package org.magicui.actions;
 
-import javax.swing.JComponent;
-import javax.swing.JRootPane;
+import java.util.Collection;
+
+import org.magicui.Action;
+import org.magicui.State;
 
 /**
- * SwingPlaceholder is a <b>cool</b> class.
+ * CompositeAction is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class SwingPlaceholder
-		extends AbstractSwingComponent<JRootPane, SwingContainer> {
-	private SwingContainer view;
+public class CompositeAction extends AbstractAction {
+    
+    /**
+     * The actions <code>Action[]</code> field.
+     */
+    private final Collection<Action> actions;
+    
+    /**
+     * Creates a new <code>CompositeAction</code> instance.
+     * @param actions The sequencial actions
+     */
+    public CompositeAction(Collection<Action> actions) {
+        this.actions = actions;
+    }
 
-	/**
-	 * @see org.magicui.ui.ValueComponent#getValue()
-	 */
-	public SwingContainer getValue() {
-		return this.view;
-	}
-
-	/**
-	 * @see org.magicui.ui.ValueComponent#setValue(java.lang.Object)
-	 */
-	public void setValue(SwingContainer value) {
-		this.view = value;
-		this.component.setContentPane(value.getComponent());
-        ((JComponent) this.component.getParent()).revalidate();
-	}
-
-	/**
-	 * @see org.magicui.ui.Component#createComponent()
-	 */
-	public JRootPane createComponent() {
-		return new JRootPane();
-	}
+    /**
+     * Execute the various actions in a sequencial order.
+     * @see org.magicui.Action#act(org.magicui.State)
+     */
+    public void act(State state) {
+        for (Action action : this.actions) {
+            action.act(state);
+        }
+    }
 
 }

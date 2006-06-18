@@ -21,6 +21,7 @@ package org.magicui.actions;
 
 import org.magicui.Action;
 
+
 /**
  * AbstractAction is a <b>cool</b> class.
  * 

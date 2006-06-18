@@ -32,10 +32,10 @@ public abstract class AbstractComponent<C> implements Component<C> {
 	/**
 	 * The parent <code>View</code> field.
 	 */
-	protected View parent;
+	private View<?> parent;
 	
 	/**
-	 * 
+	 * Creates a new <code>AbstractComponent</code> instance.
 	 */
 	public AbstractComponent() {
 		this.component = createComponent();
@@ -76,9 +76,15 @@ public abstract class AbstractComponent<C> implements Component<C> {
 	 * The setter method for the parent property.
 	 * @param parent the parent to set
 	 */
-	public void setParent(View parent) {
+	public void setParent(View<?> parent) {
 		this.parent = parent;
 	}
 	
+    /**
+     * @see org.magicui.ui.Component#getParent()
+     */
+    public View<?> getParent() {
+        return this.parent;
+    }
 	
 }

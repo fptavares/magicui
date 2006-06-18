@@ -62,12 +62,6 @@ public class Application<T> {
 	private final Map<String, Action> actions = new Hashtable<String, Action>();
 	
 	/**
-	 * The views <code>Map<String,View<? extends T>></code> field.
-	 */
-	private final Map<String, View<? extends T>> views =
-		new Hashtable<String, View<? extends T>>();
-	
-	/**
 	 * The app <code>Application<?></code> field.
 	 */
 	private static Application<?> app;
@@ -79,6 +73,7 @@ public class Application<T> {
 	public Application() throws MagicUIException {
 		this.config = new AppConfig();
 		this.resources = ResourceBundle.getBundle(this.config.getMessageResources());
+        app = this;
 	}
 
 	/**
@@ -135,19 +130,6 @@ public class Application<T> {
 	public Action getAction(String id) {
 		return this.actions.get(id);
 	}
-    
-    /**
-     * Get a view's implementation by it's id.
-     * @param id The view's id
-     * @return The view
-     */
-    public View<? extends T> getView(String id) {
-        if (this.views.containsKey(id)) {
-            return this.views.get(id);
-        } else {
-            loadWidget(id, vars); // TODO
-        }
-    }
 	
 	/**
 	 * Start the application.
@@ -155,8 +137,8 @@ public class Application<T> {
 	 * @throws MagicUIException 
 	 */
 	public void start(Object... vars) throws MagicUIException {
-		this.mainView = loadWidget(this.config.getMainWidget(), vars);
-		this.factory.createWindow(this.config.getName(), this.mainView);
+		this.mainView = internalShowWidget(
+                this.config.getName(), this.config.getMainWidget(), vars);
 	}
 	
 	/**
@@ -166,33 +148,65 @@ public class Application<T> {
 	 * @return The widget's main view
 	 * @throws MagicUIException 
 	 */
-	public View<? extends T> loadWidget(final String widget, Object... vars)
-			throws MagicUIException {
+	private View<? extends T> internalLoadWidget(final String widget,
+            final boolean standalone, Object... vars) throws MagicUIException {
 		View<? extends T> widgetMainView = null;
 		final Collection<View<? extends T>> widgetViews =
-			XMLParser.load(this, widget, vars);
+			XMLParser.load(this, widget, standalone, vars);
 		for (View<? extends T> view : widgetViews) {
 			if (widgetMainView == null) {
 				widgetMainView = view;
-				this.views.put(widget, view);
 			} else {
-				this.views.put(view.getId(), view);
+                widgetMainView.registerView(view.getId(), view);
 			}
 		}
 		return widgetMainView;
 	}
-	
-	/**
-	 * Create the application instance.
-	 * @return The application
-	 * @throws MagicUIException
-	 */
-	public static Application<?> create() throws MagicUIException {
-		if (app == null) {
-			app = new Application<Object>();
-		}
-		return app;
-	}
+    
+    /**
+     * Load a widget.
+     * @param widget The widget's name
+     * @param vars The widget's arguments
+     * @return The widget's main view
+     * @throws MagicUIException 
+     */
+    public View<? extends T> loadStandaloneWidget(final String widget,
+            Object... vars) throws MagicUIException {
+        return internalLoadWidget(widget, true, vars);
+    }
+    
+    /**
+     * Load a widget.
+     * @param widget The widget's name
+     * @param vars The widget's arguments
+     * @return The widget's main view
+     * @throws MagicUIException 
+     */
+    public View<? extends T> loadWidget(final String widget,
+            Object... vars) throws MagicUIException {
+        return internalLoadWidget(widget, false, vars);
+    }
+    
+    /**
+     * Show a stand-alone widget.
+     * @param titleKey The widget's title resource key.
+     * @param widget The widget's name
+     * @param vars The widget's arguments
+     * @return The widget's main view
+     * @throws MagicUIException
+     */
+    public View<? extends T> showWidget(final String titleKey,
+            final String widget, Object... vars) throws MagicUIException {
+        return internalShowWidget(getMessage(titleKey), widget, vars);
+    }
+    
+    private View<? extends T> internalShowWidget(final String title,
+            final String widget, Object... vars) throws MagicUIException {
+        final View<? extends T> widgetMainView =
+            loadStandaloneWidget(widget, vars);
+        this.factory.createWindow(title, widgetMainView);
+        return widgetMainView;
+    }
 	
 	/**
 	 * Access the application singleton instance.

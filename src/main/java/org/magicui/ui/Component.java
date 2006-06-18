@@ -64,5 +64,11 @@ public interface Component<C> {
 	 * The setter method for the parent property.
 	 * @param parent the parent to set
 	 */
-	public void setParent(View parent);
+	public void setParent(View<?> parent);
+
+    /**
+     * The getter method for the parent property.
+     * @return the parent to set
+     */
+    public View<?> getParent();
 }

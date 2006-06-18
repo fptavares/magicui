@@ -21,6 +21,13 @@ package org.magicui.actions;
 
 import org.magicui.Application;
 import org.magicui.State;
+import org.magicui.exceptions.MagicUIException;
+import org.magicui.ui.View;
+import org.magicui.ui.ViewState;
+import org.magicui.ui.factory.ComponentFactory;
+
+import static org.magicui.Globals.*;
+
 
 /**
  * ShowAction is a <b>cool</b> class.
@@ -29,41 +36,29 @@ import org.magicui.State;
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class ShowAction extends AbstractAction {
-	
-	/**
-	 * The view <code>String</code> field.
-	 */
-	private final String view;
-	
-	/**
-	 * The place <code>String</code> field.
-	 */
-	private final String place;
-	
-	/**
-	 * The vars <code>Object[]</code> field.
-	 */
-	private final Object [] vars;
-
+public class ShowAction extends AbstractUIAction {
 
 	/**
-	 * @param view
-	 * @param place
-	 * @param vars
-	 */
-	public ShowAction(final String view, final String place, final Object[] vars) {
-		this.view = view;
-		this.place = place;
-		this.vars = vars;
-	}
-
-
-	/**
-	 * @see org.magicui.Action#act(State)
+	 * @see org.magicui.actions.UIAction#act(org.magicui.ui.ViewState)
 	 */
 	public void act(State state) {
-		state.set(this.place, Application.getInstance().);
+		try {
+            View<?> auxView =
+                ((ViewState) state).getAuxiliarView(getParameter(ATTR_ACTION_VIEW));
+            if (auxView == null) {
+                auxView = Application.getInstance()
+                    .loadWidget(getParameter(ATTR_ACTION_VIEW), getChildren());
+            }
+            final String place = getParameter(ATTR_ACTION_PLACE);
+            if (place == null) {
+                ((ComponentFactory) Application.getInstance().getFactory())
+                    .createWindow(auxView.getId(), auxView);
+            } else {
+                state.set(place, auxView);
+            }
+        } catch (MagicUIException e) {
+            throw new RuntimeException(e);
+        }
 	}
 
 }

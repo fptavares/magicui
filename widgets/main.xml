@@ -5,19 +5,23 @@
 	<!-- actions -->
 	<action id="act1" key="action.act1" shortcutKey="action.act1.shortcut"
 		 menu="file.import" toolbar="left" icon="images/tux.gif" />
-	<action id="act2" menu="tools">
+	<action id="act2" menu="tools" key="action.act2">
 		<!-- <show place="content" view="mydata">
 			<var value="Filipe" />
 		</show> -->
 		<show place="content" view="mydata" />
 	</action>
+	<action id="act3" menu="tools" toolbar="top" key="action.act3">
+		<transferData from="cena3" to="cena2" />
+	</action>
 
 	<!-- view -->
     <view>
         <place id="content" />
-        <label id="cena2" key="main.label.cena2" name="textForLabel">
+        <label id="cena2" name="textForLabel" x="2" y="+">
         	<event type="click" action="act1" />
         </label>
+        <label id="cena3" key="main.label.cena2" x="2" y="+" />
     </view>
     
     <view id="mydata">

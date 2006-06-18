@@ -46,27 +46,41 @@ public abstract class AbstractView<C> extends AbstractComponent<C> implements Vi
 	 */
 	private final Hashtable<String, Component<?>> components =
 		new Hashtable<String, Component<?>>();
+    
+    /**
+     * The auxViews <code>Hashtable</code> field.
+     */
+    private final Hashtable<String, View<?>> auxViews =
+        new Hashtable<String, View<?>>();
 	
 
 	/**
 	 * @see org.magicui.ui.View#add(org.magicui.ui.Component, int, int, int, int)
 	 */
-	public final void add(Component<?> component, int x, int y, int xWeight, int yWeight) {
-		component.setParent(this);
-		this.components.put(component.getId(), component);
-		addComponent(component, x, y, xWeight, yWeight);
+	public final void add(Component<?> child, int x, int y, int xWeight, int yWeight) {
+		child.setParent(this);
+		this.components.put(child.getId(), child);
+		addComponent(child, x, y, xWeight, yWeight);
 	}
 
 	/**
 	 * 
 	 */
-	protected abstract void addComponent(Component<?> component, int x, int y, int xWeight, int yWeight);
+	protected abstract void addComponent(Component<?> child, int x, int y, int xWeight, int yWeight);
 	
 	/**
 	 * @see org.magicui.ui.View#getComponentById(java.lang.String)
 	 */
 	public Component<?> getComponentById(String id) {
-		return null;
+        final int index = id.indexOf('.');
+        if (index == 0) {
+            return getParent().getComponentById(id.substring(index+1));
+        } else if (index > 0) {
+            return ((View<?>) this.components.get(id.substring(0, index)))
+                .getComponentById(id.substring(index+1));
+        } else {
+            return this.components.get(id);
+        }
 	}
 	
 	/**
@@ -135,5 +149,19 @@ public abstract class AbstractView<C> extends AbstractComponent<C> implements Vi
 		}
 		return this.state;
 	}
+    
+    /**
+     * @see org.magicui.ui.View#registerView(java.lang.String, org.magicui.ui.View)
+     */
+    public void registerView(String id, View<?> auxView) {
+        this.auxViews.put(id, auxView);
+    }
+    
+    /**
+     * @see org.magicui.ui.View#getAuxiliarView(java.lang.String)
+     */
+    public View<?> getAuxiliarView(String id) {
+        return this.auxViews.get(id);
+    }
 
 }

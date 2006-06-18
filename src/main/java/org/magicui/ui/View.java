@@ -97,5 +97,19 @@ public interface View<C> extends Component<C> {
 	 * @return The state instance
 	 */
 	public State getState();
+    
+    /**
+     * Register an auxiliar (non-main) view that belongs to the same widget.
+     * @param id The view's id
+     * @param auxView A view instance
+     */
+    public void registerView(final String id, View<?> auxView);
+    
+    /**
+     * Get an auxiliar (non-main) view that belongs to the same widget.
+     * @param id The view's id
+     * @return The view
+     */
+    public View<?> getAuxiliarView(final String id);
 
 }

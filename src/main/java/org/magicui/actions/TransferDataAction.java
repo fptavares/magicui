@@ -17,43 +17,28 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui.swing;
+package org.magicui.actions;
 
-import javax.swing.JComponent;
-import javax.swing.JRootPane;
+import static org.magicui.Globals.ATTR_ACTION_FROM;
+import static org.magicui.Globals.ATTR_ACTION_TO;
+
+import org.magicui.State;
 
 /**
- * SwingPlaceholder is a <b>cool</b> class.
+ * TransferDataAction is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class SwingPlaceholder
-		extends AbstractSwingComponent<JRootPane, SwingContainer> {
-	private SwingContainer view;
+public class TransferDataAction extends AbstractUIAction {
 
-	/**
-	 * @see org.magicui.ui.ValueComponent#getValue()
-	 */
-	public SwingContainer getValue() {
-		return this.view;
-	}
-
-	/**
-	 * @see org.magicui.ui.ValueComponent#setValue(java.lang.Object)
-	 */
-	public void setValue(SwingContainer value) {
-		this.view = value;
-		this.component.setContentPane(value.getComponent());
-        ((JComponent) this.component.getParent()).revalidate();
-	}
-
-	/**
-	 * @see org.magicui.ui.Component#createComponent()
-	 */
-	public JRootPane createComponent() {
-		return new JRootPane();
-	}
+    /**
+     * @see org.magicui.Action#act(org.magicui.State)
+     */
+    public void act(State state) {
+        state.set(getParameter(ATTR_ACTION_TO),
+                state.get(getParameter(ATTR_ACTION_FROM)));
+    }
 
 }

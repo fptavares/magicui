@@ -47,7 +47,7 @@ public class ViewState implements State {
 	/**
 	 * @see org.magicui.State#get(java.lang.String)
 	 */
-	public Object get(String id) {
+	public Object get(String id) { // FIXME: handle the dots '.'!!!
 		final Component component = this.view.getComponentById(id);
 		if (component instanceof ValueComponent) {
 			return ((ValueComponent<?, ?>) component).getValue();
@@ -67,5 +67,9 @@ public class ViewState implements State {
 			throw new MagicUIException(id + " doesn't exist or isn't a value component.");
 		}*/
 	}
+    
+    public View<?> getAuxiliarView(String id) {
+        return this.view.getAuxiliarView(id);
+    }
 
 }

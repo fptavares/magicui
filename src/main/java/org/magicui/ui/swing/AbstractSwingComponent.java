@@ -47,14 +47,14 @@ public abstract class AbstractSwingComponent<C extends JComponent, T> extends Ab
 			listener = new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					action.act(AbstractSwingComponent.this.parent.getState());
+					action.act(AbstractSwingComponent.this.getParent().getState());
 				}
 			};
 		} else if (type.equals(EVENT_HOVER)) {
 			listener = new MouseAdapter() {
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					action.act(AbstractSwingComponent.this.parent.getState());
+					action.act(AbstractSwingComponent.this.getParent().getState());
 				}
 			};
 		} else {

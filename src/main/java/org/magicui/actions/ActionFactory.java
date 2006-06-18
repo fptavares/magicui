@@ -17,43 +17,32 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui.swing;
+package org.magicui.actions;
 
-import javax.swing.JComponent;
-import javax.swing.JRootPane;
+import java.util.Collection;
+
+import org.magicui.Action;
+import org.magicui.Globals;
+
+
 
 /**
- * SwingPlaceholder is a <b>cool</b> class.
+ * ActionFactory is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class SwingPlaceholder
-		extends AbstractSwingComponent<JRootPane, SwingContainer> {
-	private SwingContainer view;
-
-	/**
-	 * @see org.magicui.ui.ValueComponent#getValue()
-	 */
-	public SwingContainer getValue() {
-		return this.view;
-	}
-
-	/**
-	 * @see org.magicui.ui.ValueComponent#setValue(java.lang.Object)
-	 */
-	public void setValue(SwingContainer value) {
-		this.view = value;
-		this.component.setContentPane(value.getComponent());
-        ((JComponent) this.component.getParent()).revalidate();
-	}
-
-	/**
-	 * @see org.magicui.ui.Component#createComponent()
-	 */
-	public JRootPane createComponent() {
-		return new JRootPane();
-	}
-
+public class ActionFactory {
+    public static final UIAction create(final String action) {
+        if (action.equals(Globals.UIACTION_SHOW)) {
+            return new ShowAction();
+        } else if (action.equals(Globals.UIACTION_TRANSFERDATA)) {
+            return new TransferDataAction();
+        }
+        return null;
+    }
+    public static final Action createComposite(Collection<Action> actions) {
+        return new CompositeAction(actions);
+    }
 }
