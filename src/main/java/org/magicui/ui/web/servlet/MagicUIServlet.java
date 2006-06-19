@@ -27,9 +27,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.magicui.Application;
 import org.magicui.exceptions.MagicUIException;
-import org.magicui.ui.web.WebApplication;
 
 /**
  * MagicUIServlet is a <b>cool</b> class.
@@ -39,7 +38,7 @@ import org.magicui.ui.web.WebApplication;
  * @version $Revision$ ($Author$)
  */
 public class MagicUIServlet extends HttpServlet {
-    private WebApplication app;
+    private Application app;
     private WebApplicationLoader loader;
     
     /**
@@ -49,7 +48,7 @@ public class MagicUIServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         try {
-            this.app = new WebApplication();
+            this.app = Application.create();
             this.loader = (WebApplicationLoader) Class.forName(
                     this.getInitParameter("loader")).newInstance();
             this.loader.initialize(this.app);

@@ -1,16 +1,15 @@
 <widget>
 	<!-- vars -->
 	<var name="textForLabel" />
-	<var name="textForButton" />
 	
 	<!-- actions -->
 	<action id="act1" key="action.act1" shortcutKey="action.act1.shortcut"
-		 menu="file.import" toolbar="left" icon="images/tux.gif" />
+		 menu="file.import" toolbar="top" icon="images/tux.gif" />
 
 	<!-- view -->
     <view>
         <label id="cena3" name="textForLabel" x="+0" y="+" />
-        <label id="cena2" name="textForButton" x="_" y="+">
+        <label id="cena2" key="label.cena2" x="_" y="+">
         	<event type="click" action="act1" />
         </label>
     </view>

@@ -2,7 +2,7 @@
 <actions>
 	<action id="xyz">
 		<navTo view="stuff" />
-		<switch before="personal-data" now="organization" />
+		<show place="personal-data" view="organization" />
 		<hide />
 		
 		<transferData from="combo" to="label" />

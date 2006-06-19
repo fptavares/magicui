@@ -32,6 +32,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JToolBar;
+import javax.swing.WindowConstants;
 
 import org.magicui.ui.ActionItem;
 import org.magicui.ui.Component;
@@ -49,10 +50,10 @@ import org.magicui.ui.factory.AbstractComponentFactory;
 public class SwingFactory extends AbstractComponentFactory<JComponent> {
 
     /**
-     * @see org.magicui.ui.factory.ComponentFactory#createFrame()
+     * @see org.magicui.ui.factory.ComponentFactory#createView()
      */
-    public Component<? extends JComponent> createFrame() {
-        return new SwingContainer();
+    public Component<? extends JComponent> createView() {
+        return new SwingView();
     }
     
     /**
@@ -70,11 +71,16 @@ public class SwingFactory extends AbstractComponentFactory<JComponent> {
     }
 
     /**
-     * @see org.magicui.ui.factory.ComponentFactory#createWindow(java.lang.String, org.magicui.ui.View)
+     * @see org.magicui.ui.factory.ComponentFactory#createWindow(java.lang.String, org.magicui.ui.View, boolean)
      */
-    public Object createWindow(String title, View<? extends JComponent> content) {
+    public Object createWindow(String title, View<? extends JComponent> content,
+            final boolean isMainWindow) {
     	final JFrame frame = new JFrame(title);
-    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        if (isMainWindow) {
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        } else {
+            frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        }
     	if (content.getTop() != null) {
     		frame.getContentPane().add(convert(content, content.getTop()), BorderLayout.NORTH);
     	} 
@@ -128,7 +134,7 @@ public class SwingFactory extends AbstractComponentFactory<JComponent> {
 	/**
 	 * @see org.magicui.ui.factory.ComponentFactory#createMenu(java.lang.Object, java.lang.String)
 	 */
-	public JComponent createMenu(JComponent parentMenu, String name) {
+	public Object createMenu(Object parentMenu, String name) {
 		final JMenu menu = new JMenu(name);
 		if (parentMenu != null) {
 			((JMenu) parentMenu).add(menu);
@@ -137,9 +143,9 @@ public class SwingFactory extends AbstractComponentFactory<JComponent> {
 	}
 
 	/**
-	 * @see org.magicui.ui.factory.ComponentFactory#createMenuItem(java.lang.Object, org.magicui.ui.ActionItem)
+	 * @see org.magicui.ui.factory.ComponentFactory#createMenuItem(java.lang.Object, org.magicui.ui.ActionItem, org.magicui.ui.View)
 	 */
-	public JComponent createMenuItem(JComponent menu, ActionItem item,
+	public Object createMenuItem(Object menu, ActionItem item,
 			View<? extends JComponent> view) {
 		final JMenuItem menuItem = new JMenuItem(convertMenuItem(view, item));
 		((JMenu) menu).add(menuItem);

@@ -43,7 +43,7 @@ public class MenuParser<T> {
 	private Application<T> app;
 	private View<? extends T> view;
 	
-	private final Map<String, T> menus = new TreeMap<String, T>();
+	private final Map<String, Object> menus = new TreeMap<String, Object>();
 	private final Collection<Object> baseMenus = new LinkedList<Object>();
 	
 	/**
@@ -62,7 +62,7 @@ public class MenuParser<T> {
 	 */
 	public Collection<Object> parse(Collection<ActionItem> items) {
 		String lastPlace = null;
-		T currentMenu = null;
+        Object currentMenu = null;
 		for (ActionItem item : items) {
 			if (!item.getPlace().equals(lastPlace)) {
 				lastPlace = item.getPlace();
@@ -76,18 +76,18 @@ public class MenuParser<T> {
 	/**
 	 * @param place
 	 */
-	private T getMenu(String place) {
+	private Object getMenu(String place) {
 		if (this.menus.containsKey(place)) {
 			return this.menus.get(place);
 		} else {
-			final T parentMenu;
+			final Object parentMenu;
 			int lastDot = place.lastIndexOf('.');
 			if (lastDot >= 0) {
 				parentMenu = getMenu(place.substring(0, lastDot));
 			} else {
 				parentMenu = null; // base menu
 			}
-			final T menu = this.factory.createMenu(parentMenu,
+			final Object menu = this.factory.createMenu(parentMenu,
 					this.app.getMessage(Globals.KEY_MENU_PREFIX + place));
 			this.menus.put(place, menu); 
 			if (parentMenu == null) {

@@ -19,14 +19,14 @@
  */
 package org.magicui.actions;
 
+import static org.magicui.Globals.ATTR_ACTION_PLACE;
+import static org.magicui.Globals.ATTR_ACTION_VIEW;
+
 import org.magicui.Application;
 import org.magicui.State;
 import org.magicui.exceptions.MagicUIException;
 import org.magicui.ui.View;
 import org.magicui.ui.ViewState;
-import org.magicui.ui.factory.ComponentFactory;
-
-import static org.magicui.Globals.*;
 
 
 /**
@@ -51,8 +51,7 @@ public class ShowAction extends AbstractUIAction {
             }
             final String place = getParameter(ATTR_ACTION_PLACE);
             if (place == null) {
-                ((ComponentFactory) Application.getInstance().getFactory())
-                    .createWindow(auxView.getId(), auxView);
+                Application.getInstance().showWidget(auxView.getId(), (View) auxView);
             } else {
                 state.set(place, auxView);
             }

@@ -17,37 +17,42 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui.awt;
+package org.magicui.ui.swing;
 
 import java.awt.Container;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 import org.magicui.ui.Component;
+import org.magicui.ui.awt.AbstractAwtView;
 
 /**
- * AwtView is a <b>cool</b> class.
+ * SwingView is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class AwtView extends AbstractAwtView<Container> {
-
-    /**
-     * @see org.magicui.ui.AbstractView#addComponent(org.magicui.ui.Component, int, int, int, int)
-     */
-    @Override
-    protected void addComponent(Component<?> child, int x, int y, int xWeight, int yWeight) {
-        addComponent((java.awt.Component) child.getComponent(), x, y, xWeight, yWeight);
-    }
-
-    /**
-     * @see org.magicui.ui.Component#createComponent()
-     */
-    public Container createComponent() {
-        final Container panel = new Container();
-        panel.setLayout(new GridBagLayout());
-        return panel;
-    }
-
+public class SwingView extends AbstractAwtView<JPanel> {
+	
+	/**
+	 * @see org.magicui.ui.Component#createComponent()
+	 */
+	public JPanel createComponent() {
+		final JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		return panel;
+	}
+	
+	/**
+	 * @see org.magicui.ui.AbstractView#addComponent(org.magicui.ui.Component, int, int, int, int)
+	 */
+	public void addComponent(Component component, int x, int y, int xWeight, int yWeight) {
+		addComponent((JComponent) component.getComponent(), x, y, xWeight, yWeight);
+	}
+	
 }

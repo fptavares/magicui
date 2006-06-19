@@ -79,7 +79,7 @@ public class Application<T> {
 	 * 
 	 */
 	public Application() throws MagicUIException {
-		this.resources = ResourceBundle.getBundle(this.config.getMessageResources());
+		this.resources = ResourceBundle.getBundle(config.getMessageResources());
         this.factory = (ComponentFactory<T>) createFactory();
         app = this;
 	}
@@ -147,7 +147,7 @@ public class Application<T> {
 	 */
 	public Object start(Object... vars) throws MagicUIException {
         this.mainView = loadStandaloneWidget(this.config.getMainWidget(), vars);
-		return showWidget(this.config.getName(), this.mainView);
+		return showWidget(this.config.getName(), this.mainView, true);
 	}
     
     /**
@@ -206,9 +206,19 @@ public class Application<T> {
         return internalLoadWidget(widget, false, vars);
     }
     
-    private Object showWidget(final String title,
+    /**
+     * @param title
+     * @param widgetMainView
+     * @return The window object
+     */
+    public Object showWidget(final String title,
             final View<?extends T> widgetMainView) {
-        return this.factory.createWindow(title, widgetMainView);
+        return this.factory.createWindow(title, widgetMainView, false);
+    }
+    
+    private Object showWidget(final String title,
+            final View<?extends T> widgetMainView, final boolean isMainWindow) {
+        return this.factory.createWindow(title, widgetMainView, isMainWindow);
     }
 	
 	/**

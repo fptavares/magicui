@@ -19,7 +19,7 @@
  */
 package org.magicui.ui.web.servlet;
 
-import org.magicui.ui.web.WebApplication;
+import org.magicui.Application;
 
 /**
  * WebApplicationLoader is a <b>cool</b> class.
@@ -33,7 +33,7 @@ public abstract class WebApplicationLoader {
      * Initialize the application.
      * @param app The application instance
      */
-    public void initialize(WebApplication app) {
+    public void initialize(Application app) {
         //
     }
     /**

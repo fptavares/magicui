@@ -30,20 +30,20 @@ import javax.swing.JRootPane;
  * @version $Revision$ ($Author$)
  */
 public class SwingPlaceholder
-		extends AbstractSwingComponent<JRootPane, SwingContainer> {
-	private SwingContainer view;
+		extends AbstractSwingComponent<JRootPane, SwingView> {
+	private SwingView view;
 
 	/**
 	 * @see org.magicui.ui.ValueComponent#getValue()
 	 */
-	public SwingContainer getValue() {
+	public SwingView getValue() {
 		return this.view;
 	}
 
 	/**
 	 * @see org.magicui.ui.ValueComponent#setValue(java.lang.Object)
 	 */
-	public void setValue(SwingContainer value) {
+	public void setValue(SwingView value) {
 		this.view = value;
 		this.component.setContentPane(value.getComponent());
         ((JComponent) this.component.getParent()).revalidate();

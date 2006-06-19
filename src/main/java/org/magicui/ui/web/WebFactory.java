@@ -19,8 +19,6 @@
  */
 package org.magicui.ui.web;
 
-import java.util.Collection;
-
 import org.magicui.ui.ActionItem;
 import org.magicui.ui.Component;
 import org.magicui.ui.View;
@@ -36,9 +34,9 @@ import org.magicui.ui.factory.AbstractComponentFactory;
 public class WebFactory extends AbstractComponentFactory<WebTag> {
 
     /**
-     * @see org.magicui.ui.factory.ComponentFactory#createFrame()
+     * @see org.magicui.ui.factory.ComponentFactory#createView()
      */
-    public Component<? extends WebTag> createFrame() {
+    public Component<? extends WebTag> createView() {
         return new WebView();
     }
 
@@ -52,7 +50,7 @@ public class WebFactory extends AbstractComponentFactory<WebTag> {
     /**
      * @see org.magicui.ui.factory.ComponentFactory#createMenu(java.lang.Object, java.lang.String)
      */
-    public WebTag createMenu(WebTag parentMenu, String name) {
+    public Object createMenu(Object parentMenu, String name) {
         final WebValueTag<WebTagContainer> menu = new WebValueTag<WebTagContainer>("<menu label=\""+name+"\"><menupopup>%v</menupopup></menu>");
         menu.setValue(new WebTagContainer());
         if (parentMenu != null) {
@@ -64,7 +62,7 @@ public class WebFactory extends AbstractComponentFactory<WebTag> {
     /**
      * @see org.magicui.ui.factory.ComponentFactory#createMenuItem(java.lang.Object, org.magicui.ui.ActionItem, org.magicui.ui.View)
      */
-    public WebTag createMenuItem(WebTag menu, ActionItem item, View<? extends WebTag> view) {
+    public Object createMenuItem(Object menu, ActionItem item, View<? extends WebTag> view) {
         final WebValueTag<WebTagContainer> menuItem = new WebValueTag<WebTagContainer>("<menuitem label=\""+item.getText()+"\" />");
         ((WebValueTag<WebTagContainer>) menu).getValue().add(menuItem);
         return menuItem;
@@ -79,9 +77,10 @@ public class WebFactory extends AbstractComponentFactory<WebTag> {
     }
 
     /**
-     * @see org.magicui.ui.factory.ComponentFactory#createWindow(java.lang.String, org.magicui.ui.View)
+     * @see org.magicui.ui.factory.ComponentFactory#createWindow(java.lang.String, org.magicui.ui.View, boolean)
      */
-    public Object createWindow(String title, View<? extends WebTag> content) {
+    public Object createWindow(String title, View<? extends WebTag> content,
+            final boolean isMainWindow) {
         if (content.getTop() != null) {
             final StringBuffer top = new StringBuffer("<toolbar>");
             for (ActionItem item : content.getTop()) {

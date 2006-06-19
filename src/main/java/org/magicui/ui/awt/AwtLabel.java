@@ -21,9 +21,6 @@ package org.magicui.ui.awt;
 
 import java.awt.Label;
 
-import org.magicui.Action;
-import org.magicui.ui.AbstractValueComponent;
-
 /**
  * AwtLabel is a <b>cool</b> class.
  * 

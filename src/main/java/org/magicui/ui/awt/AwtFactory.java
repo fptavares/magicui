@@ -19,8 +19,20 @@
  */
 package org.magicui.ui.awt;
 
+import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Frame;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Collection;
 
 import org.magicui.ui.ActionItem;
 import org.magicui.ui.View;
@@ -36,56 +48,116 @@ import org.magicui.ui.factory.AbstractComponentFactory;
 public class AwtFactory extends AbstractComponentFactory<Component> {
 
     /**
-     * @see org.magicui.ui.factory.ComponentFactory#createFrame()
+     * @see org.magicui.ui.factory.ComponentFactory#createView()
      */
-    public org.magicui.ui.Component<? extends Component> createFrame() {
-        // TODO Auto-generated method stub
-        return null;
+    public org.magicui.ui.Component<? extends Component> createView() {
+        return new AwtView();
     }
 
     /**
      * @see org.magicui.ui.factory.ComponentFactory#createLabel()
      */
     public org.magicui.ui.Component<? extends Component> createLabel() {
-        // TODO Auto-generated method stub
-        return null;
+        return new AwtLabel();
     }
 
     /**
      * @see org.magicui.ui.factory.ComponentFactory#createMenu(java.lang.Object, java.lang.String)
      */
-    public Component createMenu(Component parentMenu, String name) {
-        // TODO Auto-generated method stub
-        return null;
+    public Object createMenu(Object parentMenu, String name) {
+        final Menu menu = new Menu(name);
+        if (parentMenu != null) {
+            ((Menu) parentMenu).add(menu);
+        }
+        return menu;
     }
 
     /**
      * @see org.magicui.ui.factory.ComponentFactory#createMenuItem(java.lang.Object, org.magicui.ui.ActionItem, org.magicui.ui.View)
      */
-    public Component createMenuItem(Component menu, ActionItem item, View<? extends Component> view) {
-        // TODO Auto-generated method stub
-        return null;
+    public Object createMenuItem(Object menu, final ActionItem item,
+            final View<? extends Component> view) {
+        final MenuItem menuItem = new MenuItem(item.getText());
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                item.getAction().act(view.getState());
+            }
+        });
+        ((Menu) menu).add(menuItem);
+        return menuItem;
     }
 
     /**
      * @see org.magicui.ui.factory.ComponentFactory#createPlaceholder()
      */
     public org.magicui.ui.Component<? extends Component> createPlaceholder() {
-        // TODO Auto-generated method stub
-        return null;
+        return new AwtPlaceholder();
     }
 
     /**
-     * @see org.magicui.ui.factory.ComponentFactory#createWindow(java.lang.String, org.magicui.ui.View)
+     * @see org.magicui.ui.factory.ComponentFactory#createWindow(java.lang.String, org.magicui.ui.View, boolean)
      */
-    public Object createWindow(String title, View<? extends Component> content) {
+    public Object createWindow(String title, View<? extends Component> content,
+            final boolean isMainWindow) {
         final Frame frame = new Frame();
+        frame.setLayout(new BorderLayout());
+        if (content.getTop() != null) {
+            frame.add(convert(content, content.getTop()), BorderLayout.NORTH);
+        } 
+        if (content.getBottom() != null) {
+            frame.add(convert(content, content.getBottom()), BorderLayout.SOUTH);
+        } 
+        if (content.getLeft() != null) {
+            frame.add(convert(content, content.getLeft()), BorderLayout.WEST);
+        } 
+        if (content.getRight() != null) {
+            frame.add(convert(content, content.getRight()), BorderLayout.EAST);
+        } 
+        if (content.getMenus() != null) {
+            final MenuBar menuBar = new MenuBar();
+            for (Object menu : content.getMenus()) {
+                menuBar.add((Menu) menu);
+            }
+            frame.setMenuBar(menuBar);
+        }
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if (isMainWindow) {
+                    System.exit(0);
+                } else {
+                    frame.setVisible(false);
+                }
+            }
+        });
         frame.setTitle(title);
-        frame.add(content.getComponent());
+        frame.add(content.getComponent(), BorderLayout.CENTER);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         return frame;
+    }
+
+    /**
+     * @param content 
+     * @param top
+     * @return 
+     * TODO: might give sync problems because of the "final" keyword...
+     */
+    private Component convert(final View<? extends Component> content,
+            Collection<ActionItem> items) {
+        final Panel bar = new Panel();
+        for (final ActionItem item : items) {
+            final Button button = new Button();
+            button.setLabel(item.getText());
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    item.getAction().act(content.getState());
+                }
+            });
+            bar.add(button);
+        }
+        return bar;
     }
 
 }

@@ -41,7 +41,7 @@ public abstract class AbstractComponentFactory<T> implements ComponentFactory<T>
 		if (type.equals(ELEMENT_LABEL)) {
 			return createLabel();
 		} else if (type.equals(ELEMENT_VIEW)) {
-			return createFrame();
+			return createView();
 		} else if (type.equals(ELEMENT_PLACE)) {
 			return createPlaceholder();
 		}

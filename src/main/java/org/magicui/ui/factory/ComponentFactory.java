@@ -31,8 +31,8 @@ import org.magicui.ui.View;
  * @version $Revision$ ($Author$)
  */
 public interface ComponentFactory<T> {
-    public Object createWindow(String title, View<? extends T> content);
-    public Component<? extends T> createFrame();
+    public Object createWindow(String title, View<? extends T> content, boolean isMainWindow);
+    public Component<? extends T> createView();
     public Component<? extends T> createPlaceholder();
     public Component<? extends T> createLabel();
 	/**
@@ -40,6 +40,6 @@ public interface ComponentFactory<T> {
 	 */
 	public Component<? extends T> create(String nodeName);
     
-    public T createMenuItem(T menu, ActionItem item, View<? extends T> view);
-    public T createMenu(T parentMenu, String name);
+    public Object createMenuItem(Object menu, ActionItem item, View<? extends T> view);
+    public Object createMenu(Object parentMenu, String name);
 }

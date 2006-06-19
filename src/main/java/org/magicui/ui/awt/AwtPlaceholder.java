@@ -17,17 +17,43 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui.swing;
+package org.magicui.ui.awt;
 
-import org.magicui.ui.AbstractView;
+import java.awt.Panel;
 
 /**
- * AbstractSwingContainer is a <b>cool</b> class.
+ * AwtPlaceholder is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public abstract class AbstractSwingContainer<C> extends AbstractView<C> {
+public class AwtPlaceholder
+		extends AbstractAwtComponent<Panel, AwtView> {
+	private AwtView view;
+
+	/**
+	 * @see org.magicui.ui.ValueComponent#getValue()
+	 */
+	public AwtView getValue() {
+		return this.view;
+	}
+
+	/**
+	 * @see org.magicui.ui.ValueComponent#setValue(java.lang.Object)
+	 */
+	public void setValue(AwtView value) {
+		this.view = value;
+        this.component.removeAll();
+		this.component.add(value.getComponent());
+        this.component.getParent().validate();
+	}
+
+	/**
+	 * @see org.magicui.ui.Component#createComponent()
+	 */
+	public Panel createComponent() {
+		return new Panel();
+	}
 
 }
