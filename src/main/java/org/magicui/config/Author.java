@@ -17,64 +17,44 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui;
-
-import java.util.Collection;
-
-import org.magicui.config.Author;
+package org.magicui.config;
 
 /**
- * AppConfig is a <b>cool</b> class.
+ * Author is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public interface AppConfig {
-
+public class Author {
+    private final String name;
+    private final String email;
+    private final String position;
+    public Author(final Object name, final Object email, final Object position) {
+        this.name = (String) name;
+        this.email = (String) email;
+        this.position = (String) position;
+    }
     /**
-     * 
+     * The getter method for the email property.
+     * @return the email
      */
-    public abstract String getName();
-
+    public final String getEmail() {
+        return this.email;
+    }
     /**
-     * 
+     * The getter method for the name property.
+     * @return the name
      */
-    public abstract String getDescription();
-
+    public final String getName() {
+        return this.name;
+    }
     /**
-     * 
+     * The getter method for the position property.
+     * @return the position
      */
-    public abstract String getURL();
-
-    /**
-     * 
-     */
-    public abstract String getIcon();
-
-    /**
-     * 
-     */
-    public abstract String getLogo();
-
-    /**
-     * 
-     */
-    public abstract Collection<Author> getAuthors();
-
-    /**
-     * 
-     */
-    public abstract String getToolkit();
-
-    /**
-     * 
-     */
-    public abstract String getMainWidget();
-
-    /**
-     * 
-     */
-    public abstract String getMessageResources();
-
+    public final String getPosition() {
+        return this.position;
+    }
+    
 }

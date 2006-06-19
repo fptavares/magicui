@@ -54,14 +54,14 @@ public abstract class AbstractComponent<C> implements Component<C> {
 	/**
 	 * @see org.magicui.ui.Component#getId()
 	 */
-	public final String getId() {
+	public String getId() {
 		return this.id;
 	}
 
 	/**
 	 * @see org.magicui.ui.Component#setId(java.lang.String)
 	 */
-	public final void setId(String id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	

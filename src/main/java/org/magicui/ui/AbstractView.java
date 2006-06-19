@@ -76,8 +76,11 @@ public abstract class AbstractView<C> extends AbstractComponent<C> implements Vi
         if (index == 0) {
             return getParent().getComponentById(id.substring(index+1));
         } else if (index > 0) {
-            return ((View<?>) this.components.get(id.substring(0, index)))
-                .getComponentById(id.substring(index+1));
+            Component<?> c = this.components.get(id.substring(0, index));
+            if (!(c instanceof View)) {
+                c = ((ValueComponent<?, ? extends View<?>>) c).getValue();
+            }
+            return ((View<?>) c).getComponentById(id.substring(index+1));
         } else {
             return this.components.get(id);
         }

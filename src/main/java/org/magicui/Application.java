@@ -19,15 +19,23 @@
  */
 package org.magicui;
 
+import java.awt.Component;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import javax.swing.JComponent;
+
+import org.magicui.config.XMLAppConfig;
 import org.magicui.exceptions.MagicUIException;
 import org.magicui.ui.View;
+import org.magicui.ui.awt.AwtFactory;
 import org.magicui.ui.factory.ComponentFactory;
+import org.magicui.ui.swing.SwingFactory;
+import org.magicui.ui.web.WebFactory;
+import org.magicui.ui.web.WebTag;
 import org.magicui.xml.XMLParser;
 
 /**
@@ -39,9 +47,9 @@ import org.magicui.xml.XMLParser;
  */
 public class Application<T> {
 	/**
-	 * The config <code>AppConfig</code> field.
+	 * The config <code>XMLAppConfig</code> field.
 	 */
-	private final AppConfig config;
+	private static AppConfig config;
 	/**
 	 * The resources <code>ResourceBundle</code> field.
 	 */
@@ -54,7 +62,7 @@ public class Application<T> {
 	/**
 	 * The factory <code>ComponentFactory<T></code> field.
 	 */
-	protected ComponentFactory<T> factory;
+	private final ComponentFactory<T> factory;
 	
 	/**
 	 * The actions <code>Map<String,Action></code> field.
@@ -71,8 +79,8 @@ public class Application<T> {
 	 * 
 	 */
 	public Application() throws MagicUIException {
-		this.config = new AppConfig();
 		this.resources = ResourceBundle.getBundle(this.config.getMessageResources());
+        this.factory = (ComponentFactory<T>) createFactory();
         app = this;
 	}
 
@@ -118,7 +126,7 @@ public class Application<T> {
 		try {
 			return this.resources.getString(key);
 		} catch(MissingResourceException e) {
-			return key;
+			return "{" + key + "}";
 		}
 	}
 	
@@ -134,12 +142,23 @@ public class Application<T> {
 	/**
 	 * Start the application.
 	 * @param vars The main template vars
+	 * @return The window
 	 * @throws MagicUIException 
 	 */
-	public void start(Object... vars) throws MagicUIException {
-		this.mainView = internalShowWidget(
-                this.config.getName(), this.config.getMainWidget(), vars);
+	public Object start(Object... vars) throws MagicUIException {
+        this.mainView = loadStandaloneWidget(this.config.getMainWidget(), vars);
+		return showWidget(this.config.getName(), this.mainView);
 	}
+    
+    /**
+     * Load the component that starts the application.
+     * @param vars The main template vars
+     * @return A toolkit/format specific component
+     * @throws MagicUIException 
+     */
+    public T loadMainComponent(Object... vars) throws MagicUIException {
+        return loadStandaloneWidget(this.config.getMainWidget(), vars).getComponent();
+    }
 	
 	/**
 	 * Load a widget.
@@ -187,25 +206,9 @@ public class Application<T> {
         return internalLoadWidget(widget, false, vars);
     }
     
-    /**
-     * Show a stand-alone widget.
-     * @param titleKey The widget's title resource key.
-     * @param widget The widget's name
-     * @param vars The widget's arguments
-     * @return The widget's main view
-     * @throws MagicUIException
-     */
-    public View<? extends T> showWidget(final String titleKey,
-            final String widget, Object... vars) throws MagicUIException {
-        return internalShowWidget(getMessage(titleKey), widget, vars);
-    }
-    
-    private View<? extends T> internalShowWidget(final String title,
-            final String widget, Object... vars) throws MagicUIException {
-        final View<? extends T> widgetMainView =
-            loadStandaloneWidget(widget, vars);
-        this.factory.createWindow(title, widgetMainView);
-        return widgetMainView;
+    private Object showWidget(final String title,
+            final View<?extends T> widgetMainView) {
+        return this.factory.createWindow(title, widgetMainView);
     }
 	
 	/**
@@ -215,5 +218,33 @@ public class Application<T> {
 	public static Application<?> getInstance() {
 		return app;
 	}
+    
+    public static Application<?> create() throws MagicUIException {
+        config = new XMLAppConfig();
+        final String type = config.getToolkit();
+        if (type.equals(Globals.TYPE_SWING)) {
+            return new Application<JComponent>();
+        } else if (type.equals(Globals.TYPE_AWT)) {
+            return new Application<Component>();
+        } else if (type.equals(Globals.TYPE_WEB)) {
+            return new Application<WebTag>();
+        }
+        return null;
+    }
+    
+    /**
+     * @return A component factory
+     */
+    private ComponentFactory<?> createFactory() {
+        final String type = config.getToolkit();
+        if (type.equals(Globals.TYPE_SWING)) {
+            return new SwingFactory();
+        } else if (type.equals(Globals.TYPE_AWT)) {
+            return new AwtFactory();
+        } else if (type.equals(Globals.TYPE_WEB)) {
+            return new WebFactory();
+        }
+        return null;
+    }
 	
 }

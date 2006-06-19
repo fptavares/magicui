@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>magicui</groupId>
+  <artifactId>magicui</artifactId>
+  <name>Magic UI</name>
+  <version>0.0.1</version>
+  <description>Magic UI is Java framework for graphical user interface development.</description>
+  <url>http://seldom.wordpress.com/projects/magicui</url>
+  <build>
+    <sourceDirectory>/home/ftavares/stuff/workspace/magicui/src/main/java</sourceDirectory>
+    <scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>
+    <testSourceDirectory>/home/ftavares/stuff/workspace/magicui/src/test/java</testSourceDirectory>
+    <outputDirectory>/home/ftavares/stuff/workspace/magicui/target/classes</outputDirectory>
+    <testOutputDirectory>/home/ftavares/stuff/workspace/magicui/target/test-classes</testOutputDirectory>
+    <resources>
+      <resource>
+        <directory>/home/ftavares/stuff/workspace/magicui/src/main/resources</directory>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>/home/ftavares/stuff/workspace/magicui/src/test/resources</directory>
+      </testResource>
+    </testResources>
+    <directory>/home/ftavares/stuff/workspace/magicui/target</directory>
+    <finalName>magicui-0.0.1</finalName>
+    <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.0</version>
+      </plugin>
+    </plugins>
+  </build>
+  <repositories>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>Maven Repository Switchboard</name>
+      <url>http://repo1.maven.org/maven2</url>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <releases>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>central</id>
+      <name>Maven Plugin Repository</name>
+      <url>http://repo1.maven.org/maven2</url>
+    </pluginRepository>
+  </pluginRepositories>
+  <dependencies>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.8</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-configuration</groupId>
+      <artifactId>commons-configuration</artifactId>
+      <version>1.2</version>
+    </dependency>
+  </dependencies>
+  <reporting>
+    <outputDirectory>target/site</outputDirectory>
+    <plugins>
+      <plugin>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>

@@ -22,11 +22,14 @@ package org.magicui.ui.web.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.magicui.exceptions.MagicUIException;
+import org.magicui.ui.web.WebApplication;
 
 /**
  * MagicUIServlet is a <b>cool</b> class.
@@ -36,42 +39,47 @@ import javax.servlet.http.HttpServletResponse;
  * @version $Revision$ ($Author$)
  */
 public class MagicUIServlet extends HttpServlet {
+    private WebApplication app;
+    private WebApplicationLoader loader;
+    
+    /**
+     * @see javax.servlet.GenericServlet#init()
+     */
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        try {
+            this.app = new WebApplication();
+            this.loader = (WebApplicationLoader) Class.forName(
+                    this.getInitParameter("loader")).newInstance();
+            this.loader.initialize(this.app);
+        } catch (InstantiationException e) {
+            throw new ServletException(e);
+        } catch (IllegalAccessException e) {
+            throw new ServletException(e);
+        } catch (ClassNotFoundException e) {
+            throw new ServletException(e);
+        } catch (MagicUIException e) {
+            throw new ServletException(e);
+        }
+    }
 	/**
 	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	@Override
-	public void doGet (HttpServletRequest request,
-			HttpServletResponse response)
-	throws ServletException, IOException {
+	public void doGet (HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
 		// set headers before accessing the Writer
 		response.setContentType("text/html");
-		response.setBufferSize(8192);
 		PrintWriter out = response.getWriter();
 
 		// then write the response
-		out.println("<html>" +
-				"<head><title>" +
-				"TitleBookDescription"
-				+ "</title></head>");
+		try {
+            out.println(this.app.start(this.loader.mainWidgetVarValues()));
+        } catch (MagicUIException e) {
+            throw new ServletException(e);
+        }
 
-		// Get the dispatcher; it gets the banner to the user
-		RequestDispatcher dispatcher =
-			getServletContext().getRequestDispatcher("/banner");
-		if (dispatcher != null)
-			dispatcher.include(request, response);
-
-		//Get the identifier of the book to display
-		String bookId = request.getParameter("bookId");
-		if (bookId != null) {
-			// and the information about the book
-			try {
-				// dgffsdh
-			} catch (Exception ex) {
-				response.resetBuffer();
-				throw new ServletException(ex);
-			}
-		}
-		out.println("</body></html>");
 		out.close();
 	}
 }

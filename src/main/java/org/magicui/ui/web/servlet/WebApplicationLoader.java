@@ -17,64 +17,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui;
+package org.magicui.ui.web.servlet;
 
-import java.util.Collection;
-
-import org.magicui.config.Author;
+import org.magicui.ui.web.WebApplication;
 
 /**
- * AppConfig is a <b>cool</b> class.
+ * WebApplicationLoader is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public interface AppConfig {
-
+public abstract class WebApplicationLoader {
     /**
-     * 
+     * Initialize the application.
+     * @param app The application instance
      */
-    public abstract String getName();
-
+    public void initialize(WebApplication app) {
+        //
+    }
     /**
-     * 
+     * Return, if any, the values for the main widget's vars.
+     * @return An array of objects
      */
-    public abstract String getDescription();
-
-    /**
-     * 
-     */
-    public abstract String getURL();
-
-    /**
-     * 
-     */
-    public abstract String getIcon();
-
-    /**
-     * 
-     */
-    public abstract String getLogo();
-
-    /**
-     * 
-     */
-    public abstract Collection<Author> getAuthors();
-
-    /**
-     * 
-     */
-    public abstract String getToolkit();
-
-    /**
-     * 
-     */
-    public abstract String getMainWidget();
-
-    /**
-     * 
-     */
-    public abstract String getMessageResources();
-
+    public Object [] mainWidgetVarValues() {
+        return new Object[0];
+    }
 }

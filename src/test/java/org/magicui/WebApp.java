@@ -19,62 +19,32 @@
  */
 package org.magicui;
 
-import java.util.Collection;
+import javax.swing.JOptionPane;
 
-import org.magicui.config.Author;
+import org.magicui.ui.web.WebApplication;
+import org.magicui.exceptions.MagicUIException;
 
 /**
- * AppConfig is a <b>cool</b> class.
+ * WebApp is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public interface AppConfig {
-
+public class WebApp {
+    
     /**
-     * 
+     * @param args
+     * @throws MagicUIException 
      */
-    public abstract String getName();
-
-    /**
-     * 
-     */
-    public abstract String getDescription();
-
-    /**
-     * 
-     */
-    public abstract String getURL();
-
-    /**
-     * 
-     */
-    public abstract String getIcon();
-
-    /**
-     * 
-     */
-    public abstract String getLogo();
-
-    /**
-     * 
-     */
-    public abstract Collection<Author> getAuthors();
-
-    /**
-     * 
-     */
-    public abstract String getToolkit();
-
-    /**
-     * 
-     */
-    public abstract String getMainWidget();
-
-    /**
-     * 
-     */
-    public abstract String getMessageResources();
+    public static void main(String[] args) throws MagicUIException {
+        final WebApplication app = new WebApplication();
+        app.registerAction("act1", new Action() {
+            public void act(State state) {
+                JOptionPane.showMessageDialog(null, String.valueOf(state));
+            }
+        });
+        System.out.println(app.start(new Object[0]));;
+    }
 
 }

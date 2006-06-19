@@ -17,64 +17,26 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui;
+package org.magicui.ui.web;
 
-import java.util.Collection;
-
-import org.magicui.config.Author;
+import org.magicui.*;
+import org.magicui.exceptions.MagicUIException;
 
 /**
- * AppConfig is a <b>cool</b> class.
+ * WebApplication is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public interface AppConfig {
+public class WebApplication extends Application<WebTag> {
 
     /**
-     * 
+     * Creates a new <code>WebApplication</code> instance.
+     * @throws MagicUIException
      */
-    public abstract String getName();
-
-    /**
-     * 
-     */
-    public abstract String getDescription();
-
-    /**
-     * 
-     */
-    public abstract String getURL();
-
-    /**
-     * 
-     */
-    public abstract String getIcon();
-
-    /**
-     * 
-     */
-    public abstract String getLogo();
-
-    /**
-     * 
-     */
-    public abstract Collection<Author> getAuthors();
-
-    /**
-     * 
-     */
-    public abstract String getToolkit();
-
-    /**
-     * 
-     */
-    public abstract String getMainWidget();
-
-    /**
-     * 
-     */
-    public abstract String getMessageResources();
+    public WebApplication() throws MagicUIException {
+        super();
+    }
 
 }

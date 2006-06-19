@@ -26,36 +26,10 @@ package org.magicui.ui.web;
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class WebTag {
-	private final String tag;
-	
-	private String [] values;
-	
-	/**
-	 * @param tag
-	 */
-	public WebTag(final String tag) {
-		this.tag = tag;
-	}
-	
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		String result = tag;
-		for (String value : values) {
-			result = result.replaceFirst("[^%]%s", value);
-		}
-		return result;
-	}
-	
-	/**
-	 * The setter method for the values property.
-	 * @param values the values to set
-	 */
-	public void setValue(String [] values) {
-		this.values = values;
-	}
-	
+public interface WebTag {
+    /**
+     * Get the web code.
+     * @return The web code to render
+     */
+    public String getCode();
 }

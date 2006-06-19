@@ -33,7 +33,7 @@
 	 	<position>developer</position>
 	 </author>
 	 
-	 <toolkit>swing</toolkit>
-	 <main-widget>main</main-widget>
+	 <toolkit>awt</toolkit>
+	 <main-widget>webTest</main-widget>
 	 <message-resources>org.magicui.resources</message-resources>
 </application>

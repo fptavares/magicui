@@ -17,64 +17,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui;
-
-import java.util.Collection;
-
-import org.magicui.config.Author;
+package org.magicui.ui.web;
 
 /**
- * AppConfig is a <b>cool</b> class.
+ * AbstractWebTag is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public interface AppConfig {
-
+public abstract class AbstractWebTag implements WebTag {
+    
     /**
-     * 
+     * @see java.lang.Object#toString()
      */
-    public abstract String getName();
-
-    /**
-     * 
-     */
-    public abstract String getDescription();
-
-    /**
-     * 
-     */
-    public abstract String getURL();
-
-    /**
-     * 
-     */
-    public abstract String getIcon();
-
-    /**
-     * 
-     */
-    public abstract String getLogo();
-
-    /**
-     * 
-     */
-    public abstract Collection<Author> getAuthors();
-
-    /**
-     * 
-     */
-    public abstract String getToolkit();
-
-    /**
-     * 
-     */
-    public abstract String getMainWidget();
-
-    /**
-     * 
-     */
-    public abstract String getMessageResources();
-
+    @Override
+    public final String toString() {
+        return getCode();
+    };
+    
 }

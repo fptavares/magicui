@@ -17,64 +17,41 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui;
+package org.magicui.ui.awt;
 
-import java.util.Collection;
+import java.awt.Label;
 
-import org.magicui.config.Author;
+import org.magicui.Action;
+import org.magicui.ui.AbstractValueComponent;
 
 /**
- * AppConfig is a <b>cool</b> class.
+ * AwtLabel is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public interface AppConfig {
+public class AwtLabel extends AbstractAwtComponent<Label,String> {
 
     /**
-     * 
+     * @see org.magicui.ui.ValueComponent#getValue()
      */
-    public abstract String getName();
+    public String getValue() {
+        return this.component.getText();
+    }
 
     /**
-     * 
+     * @see org.magicui.ui.ValueComponent#setValue(java.lang.Object)
      */
-    public abstract String getDescription();
+    public void setValue(String value) {
+        this.component.setText(value);
+    }
 
     /**
-     * 
+     * @see org.magicui.ui.Component#createComponent()
      */
-    public abstract String getURL();
-
-    /**
-     * 
-     */
-    public abstract String getIcon();
-
-    /**
-     * 
-     */
-    public abstract String getLogo();
-
-    /**
-     * 
-     */
-    public abstract Collection<Author> getAuthors();
-
-    /**
-     * 
-     */
-    public abstract String getToolkit();
-
-    /**
-     * 
-     */
-    public abstract String getMainWidget();
-
-    /**
-     * 
-     */
-    public abstract String getMessageResources();
+    public Label createComponent() {
+        return new Label();
+    }
 
 }

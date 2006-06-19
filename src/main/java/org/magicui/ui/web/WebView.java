@@ -17,64 +17,35 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui;
+package org.magicui.ui.web;
 
-import java.util.Collection;
-
-import org.magicui.config.Author;
+import org.magicui.ui.AbstractView;
+import org.magicui.ui.Component;
 
 /**
- * AppConfig is a <b>cool</b> class.
+ * WebView is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public interface AppConfig {
+public class WebView extends AbstractView<WebTagContainer> {
 
     /**
-     * 
+     * @see org.magicui.ui.AbstractView#addComponent(org.magicui.ui.Component, int, int, int, int)
      */
-    public abstract String getName();
+    @Override
+    protected void addComponent(Component<?> child, int x, int y, int xWeight, int yWeight) {
+        final WebValueTag<WebTag> tag = new WebValueTag<WebTag>("<hbox>%v</hbox>");
+        tag.setValue((WebTag) child.getComponent());
+        this.component.add(tag);
+    }
 
     /**
-     * 
+     * @see org.magicui.ui.Component#createComponent()
      */
-    public abstract String getDescription();
-
-    /**
-     * 
-     */
-    public abstract String getURL();
-
-    /**
-     * 
-     */
-    public abstract String getIcon();
-
-    /**
-     * 
-     */
-    public abstract String getLogo();
-
-    /**
-     * 
-     */
-    public abstract Collection<Author> getAuthors();
-
-    /**
-     * 
-     */
-    public abstract String getToolkit();
-
-    /**
-     * 
-     */
-    public abstract String getMainWidget();
-
-    /**
-     * 
-     */
-    public abstract String getMessageResources();
+    public WebTagContainer createComponent() {
+        return new WebTagContainer();
+    }
 
 }

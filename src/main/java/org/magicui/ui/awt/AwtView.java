@@ -17,64 +17,36 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui;
+package org.magicui.ui.awt;
 
-import java.util.Collection;
+import java.awt.Container;
 
-import org.magicui.config.Author;
+import org.magicui.ui.AbstractView;
+import org.magicui.ui.Component;
 
 /**
- * AppConfig is a <b>cool</b> class.
+ * AwtView is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public interface AppConfig {
+public class AwtView extends AbstractView<Container> {
 
     /**
-     * 
+     * @see org.magicui.ui.AbstractView#addComponent(org.magicui.ui.Component, int, int, int, int)
      */
-    public abstract String getName();
+    @Override
+    protected void addComponent(Component<?> child, int x, int y, int xWeight, int yWeight) {
+        this.component.add((java.awt.Component) child.getComponent());
+    }
 
     /**
-     * 
+     * @see org.magicui.ui.Component#createComponent()
      */
-    public abstract String getDescription();
-
-    /**
-     * 
-     */
-    public abstract String getURL();
-
-    /**
-     * 
-     */
-    public abstract String getIcon();
-
-    /**
-     * 
-     */
-    public abstract String getLogo();
-
-    /**
-     * 
-     */
-    public abstract Collection<Author> getAuthors();
-
-    /**
-     * 
-     */
-    public abstract String getToolkit();
-
-    /**
-     * 
-     */
-    public abstract String getMainWidget();
-
-    /**
-     * 
-     */
-    public abstract String getMessageResources();
+    public Container createComponent() {
+        // TODO Auto-generated method stub
+        return new Container();
+    }
 
 }

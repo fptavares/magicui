@@ -21,45 +21,26 @@ package org.magicui.ui.web;
 
 import org.magicui.Action;
 import org.magicui.ui.AbstractValueComponent;
+import org.magicui.ui.View;
 
 /**
- * WebLabel is a <b>cool</b> class.
+ * WebWindow is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public final class WebLabel extends AbstractValueComponent<WebValueTag<String>,String> {
+public class WebWindow extends AbstractValueComponent<WebValueTag<WebTag>,WebTag> {
 
-	/**
-	 * @see org.magicui.ui.Component#createComponent()
-	 */
-	public WebValueTag<String> createComponent() {
-		return new WebValueTag<String>("<label id=\"%s\" value=\"%v\" />");
-	}
-
-	/**
-	 * @see org.magicui.ui.ValueComponent#getValue()
-	 */
-	public String getValue() {
-		return this.component.getValue();
-	}
-
-	/**
-	 * @see org.magicui.ui.ValueComponent#setValue(java.lang.Object)
-	 */
-	public void setValue(String value) {
-		this.component.setValue(value);
-	}
-    
     /**
-     * @see org.magicui.ui.AbstractComponent#setId(java.lang.String)
+     * Creates a new <code>WebWindow</code> instance.
+     * @param title
+     * @param content
      */
-    @Override
-    public void setId(String id) {
-        super.setId(id);
-        this.component.setParams(id);
-    };
+    public WebWindow(final String title, final View<? extends WebTag> content) {
+        this.component.setParams(title);
+        this.component.setValue(content.getComponent());
+    }
 
     /**
      * @see org.magicui.ui.ValueComponent#addListener(java.lang.String, org.magicui.Action)
@@ -68,4 +49,34 @@ public final class WebLabel extends AbstractValueComponent<WebValueTag<String>,S
         // TODO Auto-generated method stub
         
     }
+
+    /**
+     * @see org.magicui.ui.Component#createComponent()
+     */
+    public WebValueTag<WebTag> createComponent() {
+        return new WebValueTag<WebTag>("<window title=\"%s\" xmlns:x=\"http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul\">%v</window>");
+    }
+
+    /**
+     * @see org.magicui.ui.ValueComponent#getValue()
+     */
+    public WebTag getValue() {
+        return this.component.getValue();
+    }
+
+    /**
+     * @see org.magicui.ui.ValueComponent#setValue(java.lang.Object)
+     */
+    public void setValue(WebTag value) {
+        this.component.setValue(value);
+    }
+    
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return this.component.getCode();
+    };
+
 }

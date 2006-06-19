@@ -47,7 +47,7 @@ public class ViewState implements State {
 	/**
 	 * @see org.magicui.State#get(java.lang.String)
 	 */
-	public Object get(String id) { // FIXME: handle the dots '.'!!!
+	public Object get(String id) {
 		final Component component = this.view.getComponentById(id);
 		if (component instanceof ValueComponent) {
 			return ((ValueComponent<?, ?>) component).getValue();

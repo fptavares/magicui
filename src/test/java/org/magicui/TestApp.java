@@ -23,24 +23,22 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
 import org.magicui.exceptions.MagicUIException;
-import org.magicui.ui.swing.SwingFactory;
 
 /**
- * SwingApp is a <b>cool</b> class.
+ * TestApp is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class SwingApp {
+public class TestApp {
 	
 	/**
 	 * @param args
 	 * @throws MagicUIException 
 	 */
 	public static void main(String[] args) throws MagicUIException {
-		final Application<JComponent> app = new Application<JComponent>();
-		app.factory = new SwingFactory();
+		final Application<?> app = Application.create();
 		app.registerAction("act1", new Action() {
 			public void act(State state) {
 				JOptionPane.showMessageDialog(null, String.valueOf(state));

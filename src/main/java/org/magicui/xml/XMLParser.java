@@ -34,6 +34,7 @@ import static org.magicui.Globals.ELEMENT_VIEW;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -44,6 +45,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.configuration.ConfigurationUtils;
 import org.magicui.Action;
 import org.magicui.Application;
 import org.magicui.Globals;
@@ -76,8 +78,8 @@ public class XMLParser<T> {
     private final ComponentFactory<T> factory;
     private final Application<T> app;
 
-    private int xCounter = 1;
-    private int yCounter = 1;
+    private int xCounter = -1; // because x increments by default
+    private int yCounter = 0;
 
     private final Map<String, Object> varMap;
 
@@ -115,7 +117,7 @@ public class XMLParser<T> {
 
             final DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
             final DocumentBuilder builder = builderFactory.newDocumentBuilder();
-            final InputSource is = new InputSource("widgets/" + widget + ".xml");
+            final InputSource is = new InputSource(ConfigurationUtils.locate("widgets/" + widget + ".xml").openStream());
             final Document doc = builder.parse(is);
 
             return parse(widget, standalone, vars, doc);
@@ -213,7 +215,9 @@ public class XMLParser<T> {
                         view.setId(getAttribute(node, ATTR_ID)); // auxViews have id
                     } else if (standalone) { // (isFirstView && standalone)
                         view.setToolbars(top, bottom, left, right);
-                        view.setMenus(new MenuParser<T>(this.app, view).parse(menu));
+                        if (menu != null) {
+                            view.setMenus(new MenuParser<T>(this.app, view).parse(menu));
+                        }
                         isFirstView = false;
                     }
                     views.add(view);
@@ -253,20 +257,23 @@ public class XMLParser<T> {
      * @throws MagicUIException 
      */
     private Object [] parseViewVars(final NodeList varNodes) throws MagicUIException {
-        Object [] vars = new Object[varNodes.getLength()];
+        final Collection<Object> vars = new ArrayList<Object>();
         for (int j = 0; j < varNodes.getLength(); j++) {
             final Node var = varNodes.item(j);
-            final Object value;
-            if (hasAttribute(var, ATTR_NAME)) {
-                value = getValueFor(getAttribute(var, ATTR_NAME),
-                        getAttribute(var, ATTR_PROPERTY));
-            } else {
-                value = getAttribute(var, ATTR_VALUE);
+
+            if (var.getNodeType() == Node.ELEMENT_NODE) {
+                final Object value;
+                if (hasAttribute(var, ATTR_NAME)) {
+                    value = getValueFor(getAttribute(var, ATTR_NAME),
+                            getAttribute(var, ATTR_PROPERTY));
+                } else {
+                    value = getAttribute(var, ATTR_VALUE);
+                }
+                
+                vars.add(value);
             }
-            
-            vars[j] = value;
         }
-        return vars;
+        return vars.toArray();
     }
 
     /**
@@ -286,7 +293,11 @@ public class XMLParser<T> {
     }
 
     private static String getAttribute(Node node, String attr) {
-        return node.getAttributes().getNamedItem(attr).getNodeValue();
+        final Node attrNode = node.getAttributes().getNamedItem(attr);
+        if (attrNode == null) {
+            return null;
+        }
+        return attrNode.getNodeValue();
     }
 
     private static boolean hasAttribute(Node node, String attr) {
@@ -431,6 +442,8 @@ public class XMLParser<T> {
             } else {
                 counter--;
             }
+            break;
+        case '_':
             break;
         default:
             counter = Integer.parseInt(val);

@@ -17,64 +17,44 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui;
+package org.magicui.ui.web;
 
-import java.util.Collection;
-
-import org.magicui.config.Author;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * AppConfig is a <b>cool</b> class.
+ * WebTagContainer is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public interface AppConfig {
-
+public class WebTagContainer extends AbstractWebTag {
     /**
-     * 
+     * The tags <code>Collection<WebTag></code> field.
      */
-    public abstract String getName();
-
+    final List<WebTag> tags = new ArrayList<WebTag>();
+    
     /**
-     * 
+     * @see org.magicui.ui.web.WebTag#getCode()
      */
-    public abstract String getDescription();
-
+    public String getCode() {
+        final StringBuffer sb = new StringBuffer();
+        for (WebTag tag : this.tags) {
+            sb.append(tag.getCode());
+        }
+        return sb.toString();
+    }
+    
     /**
-     * 
+     * @param tag The tag
      */
-    public abstract String getURL();
-
-    /**
-     * 
-     */
-    public abstract String getIcon();
-
-    /**
-     * 
-     */
-    public abstract String getLogo();
-
-    /**
-     * 
-     */
-    public abstract Collection<Author> getAuthors();
-
-    /**
-     * 
-     */
-    public abstract String getToolkit();
-
-    /**
-     * 
-     */
-    public abstract String getMainWidget();
-
-    /**
-     * 
-     */
-    public abstract String getMessageResources();
-
+    public final void add(WebTag tag) {
+        this.tags.add(tag);
+    }
+    
+    public final void insert(WebTag tag) {
+        this.tags.add(0, tag);
+    }
+    
 }
