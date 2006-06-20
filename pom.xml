@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?><project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>magicui</groupId>
+  <groupId>org.magicui</groupId>
   <artifactId>magicui</artifactId>
   <name>Magic UI</name>
-  <version>0.0.1</version>
+  <version>0.3</version>
   <description>Magic UI is Java framework for graphical user interface development.</description>
   <url>http://seldom.wordpress.com/projects/magicui</url>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <dependencies>
     <dependency>
       <groupId>commons-configuration</groupId>
       <artifactId>commons-configuration</artifactId>
       <version>1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.0</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
   <reporting>
@@ -19,8 +36,10 @@
         <artifactId>maven-project-info-reports-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dotuml-plugin</artifactId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-jxr-plugin</artifactId>
       </plugin>
     </plugins>
   </reporting>
