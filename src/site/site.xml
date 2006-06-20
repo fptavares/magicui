@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="magicui">
-  <bannerRight>
+  <bannerLeft>
     <name>Magic UI</name>
-    <src>http://seldom.wordpress.com/files/2006/05/magicui_200.png</src>
+    <src>images/logos/magicui_small.png</src>
     <href>http://seldom.wordpress.com/projects/magicui</href>
-  </bannerRight>
+  </bannerLeft>
   <body>
     <links>
       <item name="Magic UI @ AS" href="http://doc-it.fe.up.pt/aaguiar/space/Teaching/2005-06/LEIC-ASS-2005-06/Projectos+LEIC/MagicUI" />

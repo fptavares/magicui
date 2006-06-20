@@ -20,7 +20,6 @@
 package org.magicui.ui.web;
 
 import org.magicui.Action;
-import org.magicui.ui.AbstractValueComponent;
 
 /**
  * WebLabel is a <b>cool</b> class.
@@ -29,7 +28,7 @@ import org.magicui.ui.AbstractValueComponent;
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public final class WebLabel extends AbstractValueComponent<WebValueTag<String>,String> {
+public final class WebLabel extends AbstractWebComponent<String> {
 
 	/**
 	 * @see org.magicui.ui.Component#createComponent()

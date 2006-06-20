@@ -39,7 +39,7 @@ import org.magicui.ui.ViewState;
 public class ShowAction extends AbstractUIAction {
 
 	/**
-	 * @see org.magicui.actions.UIAction#act(org.magicui.ui.ViewState)
+	 * @see org.magicui.Action#act(org.magicui.State)
 	 */
 	public void act(State state) {
 		try {

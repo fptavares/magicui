@@ -12,16 +12,15 @@
       <artifactId>commons-configuration</artifactId>
       <version>1.2</version>
     </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.8</version>
-    </dependency>
   </dependencies>
   <reporting>
     <plugins>
       <plugin>
         <artifactId>maven-project-info-reports-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dotuml-plugin</artifactId>
       </plugin>
     </plugins>
   </reporting>

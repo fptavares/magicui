@@ -20,8 +20,6 @@
 package org.magicui.actions;
 
 import org.magicui.Action;
-import org.magicui.State;
-import org.magicui.ui.ViewState;
 
 /**
  * UIAction is a <b>cool</b> class.

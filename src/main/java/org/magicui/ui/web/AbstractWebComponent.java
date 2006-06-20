@@ -17,42 +17,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  *
  */
-package org.magicui.ui.menu;
+package org.magicui.ui.web;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.magicui.ui.ActionItem;
+import org.magicui.ui.AbstractValueComponent;
 
 /**
- * Menu is a <b>cool</b> class.
+ * AbstractWebComponent is a <b>cool</b> class.
  * 
  * @author Filipe Tavares
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class Menu extends ActionItem {
-    /**
-     * The items <code>Map<String,ActionItem></code> field.
-     */
-    final Map<String, ActionItem> items = new HashMap<String, ActionItem>();
-    
-	/**
-	 * Creates a new <code>Menu</code> instance.
-	 * @param text
-	 * @param place
-	 * @param icon
-	 */
-	public Menu(String text, String place, String icon) {
-		super(text, null, place, icon);
-	}
-	
-	/**
-     * Adds an item to this menu.
-	 * @param id
-	 * @param item
-	 */
-	public void addItem(String id, ActionItem item) {
-		this.items.put(id, item);
-	}
+public abstract class AbstractWebComponent<T> extends AbstractValueComponent<WebValueTag<T>, T> {
+
 }

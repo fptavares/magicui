@@ -34,7 +34,7 @@ import org.magicui.State;
 public class CompositeAction extends AbstractAction {
     
     /**
-     * The actions <code>Action[]</code> field.
+     * The actions <code>Collection<Action></code> field.
      */
     private final Collection<Action> actions;
     

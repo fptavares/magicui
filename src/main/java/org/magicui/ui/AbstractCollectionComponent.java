@@ -29,7 +29,7 @@ import java.util.LinkedList;
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public abstract class AbstractCollectionComponent extends AbstractComponent
+public abstract class AbstractCollectionComponent<C> extends AbstractValueComponent<C, Collection<?>>
 		implements CollectionComponent {
 	final Collection<Item> items = new LinkedList<Item>();
 

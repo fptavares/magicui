@@ -20,7 +20,6 @@
 package org.magicui.ui.web;
 
 import org.magicui.Action;
-import org.magicui.ui.AbstractValueComponent;
 import org.magicui.ui.View;
 
 /**
@@ -30,7 +29,7 @@ import org.magicui.ui.View;
  * @author Belmiro Sotto-Mayor
  * @version $Revision$ ($Author$)
  */
-public class WebWindow extends AbstractValueComponent<WebValueTag<WebTag>,WebTag> {
+public class WebWindow extends AbstractWebComponent<WebTag> {
 
     /**
      * Creates a new <code>WebWindow</code> instance.
