@@ -230,16 +230,18 @@ public class Application<T> {
 	}
     
     public static Application<?> create() throws MagicUIException {
-        config = new XMLAppConfig();
-        final String type = config.getToolkit();
-        if (type.equals(Globals.TYPE_SWING)) {
-            return new Application<JComponent>();
-        } else if (type.equals(Globals.TYPE_AWT)) {
-            return new Application<Component>();
-        } else if (type.equals(Globals.TYPE_WEB)) {
-            return new Application<WebTag>();
+        if (app == null) {
+            config = new XMLAppConfig();
+            final String type = config.getToolkit();
+            if (type.equals(Globals.TYPE_SWING)) {
+                return new Application<JComponent>();
+            } else if (type.equals(Globals.TYPE_AWT)) {
+                return new Application<Component>();
+            } else if (type.equals(Globals.TYPE_WEB)) {
+                return new Application<WebTag>();
+            }
         }
-        return null;
+        return app;
     }
     
     /**
